@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Space, Table, Modal } from 'antd';
+import { Space, Table, Modal, InputNumber } from 'antd';
 import { Button, Drawer } from 'antd';
 import { Form, Input, Select, DatePicker } from 'antd';
 import { EditOutlined, EyeOutlined } from '@ant-design/icons';
@@ -355,11 +355,11 @@ const ExpenseEntry = () => {
 
                 <Drawer title={drawerTitle} placement="right" width={600} onClose={onClose} open={open}>
                     <Form name="basic" layout="vertical" form={form} initialValues={{ remember: true }} onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off">
-                        <Form.Item label="Expense User" name="expense_user" required={true} rules={[{ required: true, message: 'This field is required.' }]}>
+                        <Form.Item label="Expense User" name="expense_user" required={true} rules={[{ required: true, message: 'Expense User field is required.' }]}>
                             <Input />
                         </Form.Item>
 
-                        <Form.Item label="Expense Category" name="expense_category" required={true} rules={[{ required: true, message: 'This field is required.' }]}>
+                        <Form.Item label="Expense Category" name="expense_category" required={true} rules={[{ required: true, message: 'Expense Category field is required.' }]}>
                             <Select placeholder="Select a expense category">
                                 {formFields?.expense?.map((val: any) => (
                                     <Select.Option key={val.id} value={val.id}>
@@ -369,15 +369,15 @@ const ExpenseEntry = () => {
                             </Select>
                         </Form.Item>
 
-                        <Form.Item<FieldType> label="Amount" name="amount" required={true} rules={[{ required: true, message: 'This field is required.' }]}>
+                        <Form.Item<FieldType> label="Amount" name="amount" required={true} rules={[{ required: true, message: 'Amount field is required.' }]}>
+                            <InputNumber style={{width:"100%"}} />
+                        </Form.Item>
+
+                        <Form.Item<FieldType> label="Narration" name="narration" required={true} rules={[{ required: true, message: 'Narration field is required' }]}>
                             <Input />
                         </Form.Item>
 
-                        <Form.Item<FieldType> label="Narration" name="narration" required={true} rules={[{ required: true, message: 'Please input your Narration!' }]}>
-                            <Input />
-                        </Form.Item>
-
-                        <Form.Item label="Date" name="date" required={true} rules={[{ required: true, message: 'Please input your Date!' }]}>
+                        <Form.Item label="Date" name="date" required={true} rules={[{ required: true, message: 'Please Select your Expense Entry Date!' }]}>
                             <DatePicker style={{ width: '100%' }}  />
                         </Form.Item>
 

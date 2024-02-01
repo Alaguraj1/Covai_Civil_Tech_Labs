@@ -336,7 +336,7 @@ const Test = () => {
 
                 <Drawer title={drawertitle} placement="right" width={600} onClose={onClose} open={open}>
                     <Form name="basic" layout="vertical" form={form} initialValues={{ remember: true }} onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off">
-                        <Form.Item label="Material Name" name="material_name" required={true} rules={[{ required: true, message: 'Please input your Material Name!' }]}>
+                        <Form.Item label="Material Name" name="material_name" required={true} rules={[{ required: true, message: 'Please Select your Material Name!' }]}>
                             <Select>
                                 {formFields?.materials?.map((val: any) => (
                                     <Select.Option key={val.id} value={val.material_id}>
@@ -350,7 +350,7 @@ const Test = () => {
                             <Input />
                         </Form.Item>
 
-                        <Form.Item label="Price" name="price_per_piece" required={true} rules={[{ required: true, message: 'Please input your Price!' }]}>
+                        <Form.Item label="Price" name="price_per_piece" required={true} rules={[{ required: true, message: 'Please input your Testing Price!' }]}>
                             <InputNumber style={{ width: '100%' }} />
                         </Form.Item>
 

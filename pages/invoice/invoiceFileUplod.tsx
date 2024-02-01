@@ -424,7 +424,7 @@ const InvoiceFileUpload = () => {
 
                 <Drawer title={drawerTitle} placement="right" width={600} onClose={onClose} open={open}>
                     <Form name="basic" layout="vertical" form={form} initialValues={{ remember: true }} onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off">
-                        <Form.Item label="Category" name="category" required={true} rules={[{ required: true, message: 'This field is required.' }]}>
+                        <Form.Item label="Category" name="category" required={true} rules={[{ required: true, message: 'Category field is required.' }]}>
                             <Select placeholder="Select a Category" onChange={handleCategoryChange}>
                                 {formFields?.categories?.map((val: any) => (
                                     <Select.Option key={val.id} value={val.id}>
@@ -435,7 +435,7 @@ const InvoiceFileUpload = () => {
                         </Form.Item>
 
                         {selectedCategory === 2 && (
-                            <Form.Item label="Invoice" name="invoice" required={true} rules={[{ required: true, message: 'This field is required.' }]}>
+                            <Form.Item label="Invoice" name="invoice" required={true} rules={[{ required: true, message: 'Invoice field is required.' }]}>
                                 <Select placeholder="Select an Invoice">
                                     {formFields?.invoices?.map((val: any) => (
                                         <Select.Option key={val.id} value={val.id}>
@@ -447,7 +447,7 @@ const InvoiceFileUpload = () => {
                         )}
 
                         {selectedCategory === 3 && (
-                            <Form.Item label="Expense Entry" name="expense" required={true} rules={[{ required: true, message: 'This field is required.' }]}>
+                            <Form.Item label="Expense Entry" name="expense" required={true} rules={[{ required: true, message: 'Expense field is required.' }]}>
                                 <Select placeholder="Select an Expense Entry">
                                     {formFields?.expense_entries?.map((val: any) => (
                                         <Select.Option key={val.id} value={val.id}>

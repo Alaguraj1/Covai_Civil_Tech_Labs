@@ -103,6 +103,7 @@ const PendingPayment = () => {
                 item.customer.toLowerCase().includes(SearchValue.toLowerCase()) ||
                 item.project_name.toLowerCase().includes(SearchValue.toLowerCase()) ||
                 item.total_amount.includes(SearchValue) ||
+                item.advance.includes(SearchValue) ||
                 item.balance.includes(SearchValue) ||
                 item.incompleted_test.includes(SearchValue)
             );

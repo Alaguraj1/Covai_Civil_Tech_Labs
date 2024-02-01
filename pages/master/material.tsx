@@ -343,10 +343,10 @@ const Material = () => {
 
                 <Drawer title={DrawerTitle} placement="right" width={600} onClose={onClose} open={open}>
                     <Form name="basic" layout="vertical" form={form} initialValues={{ remember: true }} onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off">
-                        <Form.Item<FieldType> label="Material Name" name="material_name" required={true} rules={[{ required: true, message: 'Please input your Material Name' }]}>
+                        <Form.Item<FieldType> label="Material Name" name="material_name" required={true} rules={[{ required: true, message: 'Material Name field is required' }]}>
                             <Input />
                         </Form.Item>
-                        <Form.Item label="Templates" name="template" required={false} rules={[{ required: false, message: 'Please input your Template' }]}>
+                        <Form.Item label="Templates" name="template" required={false} rules={[{ required: false, message: 'Template field is required ' }]}>
                             <div dangerouslySetInnerHTML={{ __html: editor }} style={{ display: 'none' }} />
                             {editorLoaded && (
                                 <CKEditor
@@ -360,7 +360,7 @@ const Material = () => {
                             )}
                         </Form.Item>
 
-                        <Form.Item label="Print Format" name="print_format" required={true} rules={[{ required: true, message: 'This field is required.' }]}>
+                        <Form.Item label="Print Format" name="print_format" required={true} rules={[{ required: true, message: 'Print Format field is required.' }]}>
                             <Select>
                                 {formFields?.print_format?.map((val: any) => {
                                     return <Select.Option value={val.id}>{val.name}</Select.Option>;
@@ -368,7 +368,7 @@ const Material = () => {
                             </Select>
                         </Form.Item>
 
-                        <Form.Item label="Letter Pad Logo" name="letter_pad_logo" required={true} rules={[{ required: true, message: 'This field is required.' }]}>
+                        <Form.Item label="Letter Pad Logo" name="letter_pad_logo" required={true} rules={[{ required: true, message: 'Letter Pad Logo field is required.' }]}>
                             <Select>
                                 {formFields?.letter_pad_logo?.map((val: any) => {
                                     return <Select.Option value={val?.id}>{val?.name}</Select.Option>;

@@ -258,7 +258,7 @@ const Tax = () => {
             },
             {
                 label: 'Tax Status:',
-                value: viewRecord?.tax_status || 'N/A',
+                value: viewRecord?.status || 'N/A',
             },
             {
                 label: 'Created By:',
@@ -305,15 +305,15 @@ const Tax = () => {
 
                 <Drawer title={drawerTitle} placement="right" width={600} onClose={onClose} open={open}>
                     <Form name="basic" layout="vertical" form={form} initialValues={{ remember: true }} onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off">
-                        <Form.Item<FieldType> label="Tax Name" name="tax_name" required={true} rules={[{ required: true, message: 'This field is required.' }]}>
+                        <Form.Item<FieldType> label="Tax Name" name="tax_name" required={true} rules={[{ required: true, message: 'Tax Name field is required.' }]}>
                             <Input />
                         </Form.Item>
 
-                        <Form.Item<FieldType> label="Tax Percentage" name="tax_percentage" required={true} rules={[{ required: true, message: 'This field is required.' }]}>
+                        <Form.Item<FieldType> label="Tax Percentage" name="tax_percentage" required={true} rules={[{ required: true, message: 'Tax Percentage field is required.' }]}>
                             <InputNumber style={{ width: '100%' }} />
                         </Form.Item>
 
-                        <Form.Item label="Tax Status" name="tax_status" required={true} rules={[{ required: true, message: 'This field is required.' }]}>
+                        <Form.Item label="Tax Status" name="tax_status" required={true} rules={[{ required: true, message: 'Tax Status field is required.' }]}>
                             <Radio.Group>
                                 <Radio value="E"> Enable </Radio>
                                 <Radio value="D"> Disable </Radio>

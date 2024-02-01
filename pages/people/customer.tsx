@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Space, Table, Modal } from 'antd';
+import { Space, Table, Modal, InputNumber } from 'antd';
 import { Button, Drawer } from 'antd';
 import { Form, Input, Select } from 'antd';
 import { EditOutlined, EyeOutlined } from '@ant-design/icons';
@@ -439,7 +439,7 @@ const Customer = () => {
                         </Form.Item>
 
                         <Form.Item<FieldType> label="Phone Number" name="phone_no" required={true} rules={[{ required: true, message: 'Please input your Phone Number!' }]}>
-                            <Input maxLength={10} />
+                            <InputNumber minLength={10} maxLength={10} style={{width:"100%"}}/>
                         </Form.Item>
 
                         <Form.Item<FieldType> label="GST in" name="gstin_no" required={true} rules={[{ required: true, message: 'Please input your GST in!' }]}>
@@ -485,7 +485,7 @@ const Customer = () => {
                         </Form.Item>
 
                         <Form.Item<FieldType> label="Pincode 1" name="pincode1" required={true} rules={[{ required: true, message: 'Please input your Pincode 1!' }]}>
-                            <Input />
+                            <InputNumber maxLength={6} style={{width:"100%"}}/>
                         </Form.Item>
 
                         <Form.Item<FieldType> label="Address 2" name="address2" required={false} rules={[{ required: false, message: 'Please input your Address 2!' }]}>
@@ -523,7 +523,7 @@ const Customer = () => {
                         </Form.Item>
 
                         <Form.Item<FieldType> label="Pincode 2" name="pincode2" required={false} rules={[{ required: false, message: 'Please input your Pincode 2!' }]}>
-                            <Input />
+                            <InputNumber maxLength={6} style={{width:"100%"}}/>
                         </Form.Item>
 
                        <Form.Item<FieldType> label="Contact Person 1" name="contact_person1" required={false} rules={[{ required: false, message: 'Please input your Contact Person 1!' }]}>
@@ -531,7 +531,7 @@ const Customer = () => {
                         </Form.Item>
 
                         <Form.Item<FieldType> label="Mobile Number 1" name="mobile_no1" required={false} rules={[{ required: false, message: 'Please input your Mobile Number 1!' }]}>
-                            <Input maxLength={10} minLength={10} />
+                            <InputNumber maxLength={10} minLength={10} style={{width:"100%"}}/>
                         </Form.Item>
 
                         <Form.Item<FieldType>
@@ -548,7 +548,7 @@ const Customer = () => {
                         </Form.Item>
 
                         <Form.Item<FieldType> label="Mobile Number 2" name="mobile_no2" required={false} rules={[{ required: false, message: 'Please input your Mobile Number 2!' }]}>
-                            <Input maxLength={10} minLength={10} />
+                            <InputNumber maxLength={10} minLength={10} style={{width:"100%"}}/>
                         </Form.Item>
 
                         <Form.Item<FieldType>

@@ -269,7 +269,7 @@ const Invoice = () => {
 
                 <Drawer title="Create Invoice" placement="right" width={600} onClose={onClose} open={open}>
                     <Form name="basic-form" layout="vertical" initialValues={{ remember: true }} onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off" form={form}>
-                        <Form.Item label="Customer Name" name="customer" required={false} rules={[{ required: true, message: 'Please select Material Name!' }]}>
+                        <Form.Item label="Customer Name" name="customer" required={false} rules={[{ required: true, message: 'Please select Customer Name!' }]}>
                             <Select onChange={handleSelectChange} placeholder="Select a customer" value={selectedCustomerId}>
                                 {formFields?.customer?.map((val: any) => (
                                     <Select.Option key={val.id} value={val.id}>

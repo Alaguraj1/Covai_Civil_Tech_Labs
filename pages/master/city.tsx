@@ -285,7 +285,7 @@ const City = () => {
 
                 <Drawer title={drawerTitle} placement="right" width={600} onClose={onClose} open={open}>
                     <Form name="basic" layout="vertical" form={form} initialValues={{ remember: true }} onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off">
-                        <Form.Item<FieldType> label="City Name" name="name" required={true} rules={[{ required: true, message: 'This field is required.' }]}>
+                        <Form.Item<FieldType> label="City Name" name="name" required={true} rules={[{ required: true, message: 'City Name field is required.' }]}>
                             <Input />
                         </Form.Item>
 

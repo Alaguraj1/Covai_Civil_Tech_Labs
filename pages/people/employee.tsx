@@ -251,8 +251,7 @@ const Employee = () => {
                 });
         }
     };
-    const onFinishFailed = (errorInfo: any) => {
-    };
+    const onFinishFailed = (errorInfo: any) => {};
 
     type FieldType = {
         employee_name?: string;
@@ -386,47 +385,26 @@ const Employee = () => {
                             <Input type="email" />
                         </Form.Item>
 
-                        {/* <Form.Item<FieldType>
-                            label="Login Name"
-                            name="login_name"
-                            required={true}
-                            rules={[{ required: true, message: 'Please input your Login Name!' }]}
-                        >
-                            <Input />
-                        </Form.Item> */}
-
-                        <Form.Item<FieldType> label="Password" name="password" required={false} rules={[{ required: false, message: 'Please input your Password!' }]}>
-                            <Input.Password />
-                        </Form.Item>
+                        {drawerTitle === 'Create Employee' ? (
+                            <Form.Item<FieldType> label="Password" name="password" required={true} rules={[{ required: true, message: 'Please input your Password!' }]}>
+                                <Input.Password />
+                            </Form.Item>
+                        ) : (
+                            <Form.Item<FieldType> label="Password" name="password" required={false} rules={[{ required: false, message: 'Please input your Password!' }]}>
+                                <Input.Password />
+                            </Form.Item>
+                        )}
 
                         <Form.Item<FieldType> label="Address" name="address" required={true} rules={[{ required: true, message: 'Please input your Address!' }]}>
                             <TextArea rows={4} />
                         </Form.Item>
 
                         <Form.Item<FieldType> label="Mobile Number" name="mobile_number" required={true} rules={[{ required: true, message: 'Please input your Mobile Number!' }]}>
-                            <InputNumber style={{ width: '100%' }} maxLength={10} />
+                            <InputNumber style={{ width: '100%' }} maxLength={10} minLength={10}/>
                         </Form.Item>
 
-                        {/* <Form.Item<FieldType>
-                            label="Phone Number"
-                            name="phone_number"
-                            required={true}
-                            rules={[{ required: true, message: 'Please input your Phone Number!' }]}
-                        >
-                            <InputNumber style={{ width: "100%" }} maxLength={10} />
-                        </Form.Item> */}
-
-                        {/* <Form.Item<FieldType>
-                            label="Email"
-                            name="email"
-                            required={true}
-                            rules={[{ required: true, message: 'Please input your EMail!' }]}
-                        >
-                            <Input />
-                        </Form.Item> */}
-
                         <Form.Item<FieldType> label="Branch Email" name="branch_email" required={true} rules={[{ required: true, message: 'Please input your Branch Email!' }]}>
-                            <Input />
+                            <Input type='email'/>
                         </Form.Item>
 
                         <Form.Item label="DOB" name="dob" required={true} rules={[{ required: true, message: 'Please Select your DOB!' }]}>
