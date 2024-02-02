@@ -422,12 +422,16 @@ const Header = () => {
                                 </div>
                             </button>
                             <ul className="sub-menu">
+                            <li>
+                                    <Link href="/report/saleReport">{t('Sales Report')}</Link>
+                                </li>
                                 <li>
                                     <Link href="/report/expenseReport">{t('Expense Report')}</Link>
                                 </li>
                                 <li>
-                                    <Link href="/report/saleReport">{t('Sales Report')}</Link>
+                                    <Link href="/report/expenseFileReport">{t('Expense File Report')}</Link>
                                 </li>
+                               
                             </ul>
                         </li>
                     ) : (

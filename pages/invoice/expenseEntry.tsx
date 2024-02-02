@@ -140,6 +140,15 @@ const ExpenseEntry = () => {
             className: 'singleLineCell',
         },
         {
+            title: 'Date',
+            dataIndex: 'date',
+            key: 'date',
+            className: 'singleLineCell',
+            render: (text:any, record:any) => {
+              return dayjs(text).format('DD-MM-YYYY');
+            }
+          },
+        {
             title: 'Actions',
             key: 'actions',
             className: 'singleLineCell',
