@@ -13,13 +13,17 @@ const InvoiceFileUpload = () => {
 
     const [open, setOpen] = useState(false);
     const [editRecord, setEditRecord] = useState<any>(null);
-    const [drawerTitle, setDrawerTitle] = useState('Create Tax');
+    const [drawerTitle, setDrawerTitle] = useState('Create File Upload');
     const [viewRecord, setViewRecord] = useState<any>(null);
     const [dataSource, setDataSource] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [formFields, setFormFields] = useState<any>([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
-    const [fileList, setFileList] = useState([]);
+    const [fileshow, setFileShow] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [fileInputData, setFileInputData] = useState<any>({
+        file: null,
+    });
 
     useEffect(() => {
         const Token = localStorage.getItem('token');
@@ -36,7 +40,7 @@ const InvoiceFileUpload = () => {
             .catch((error: any) => {
                 if (error.response.status === 401) {
                     router.push('/');
-                } 
+                }
             });
     }, []);
 
@@ -96,36 +100,27 @@ const InvoiceFileUpload = () => {
 
     // drawer
     const showDrawer = (record: any) => {
+        console.log('✌️record --->', record);
+        console.log('fileInputData.file', fileInputData.file);
+
         if (record) {
+            setFileShow(record.file_url);
             setEditRecord(record);
             setSelectedCategory(record.category);
-            const parsedUrl = new URL(record.file_url);
-            const path = parsedUrl.pathname;
-            const pathSegments = path.split('/');
-            const filename = pathSegments[pathSegments.length - 1];
-            const arr: any = [
-                {
-                    uid: 'rc-upload-1',
-                    name: filename, // Assuming 'file_url' is the field with the existing file name
-                    status: 'done',
-                    url: record.file_url, // Assuming 'file_url' is the field with the file URL
-                },
-            ];
-            setFileList(arr);
             form.setFieldsValue({
                 invoice: record.invoice,
                 category: record.category,
                 expense: record.expense,
-                file: arr,
             });
+            setFileInputData({ ...fileInputData, file: fileInputData.file?.name });
         } else {
             setEditRecord(null);
             form.resetFields();
-            setFileList([]);
+            setFileShow('');
         }
-
         setOpen(true);
     };
+    console.log('File show:', fileshow);
 
     const onClose = () => {
         setOpen(false);
@@ -196,38 +191,6 @@ const InvoiceFileUpload = () => {
         },
     ];
 
-    // const handleDownload = (fileUrl: any) => {
-    //   const link = document.createElement('a');
-    //   link.href = fileUrl;
-    //   link.target = '_blank'; // Open in a new tab/window
-    //   link.rel = 'noopener noreferrer';
-    //   link.click();
-    // };
-
-    // const handleDelete = (record: any,) => {
-
-    //   const Token = localStorage.getItem("token")
-
-    //   Modal.confirm({
-    //     title: "Are you sure, you want to delete this INVOICE FILE UPLOAD record?",
-    //     okText: "Yes",
-    //     okType: "danger",
-    //     onOk: () => {
-    //       axios.delete(`http://files.covaiciviltechlab.com/delete_invoice_file_upload/${record.id}`, {
-    //         headers: {
-    //           "Authorization": `Token ${Token}`
-    //         }
-    //       }).then((res) => {
-    //         console.log(res.data)
-    //         getFileUpload()
-    //       }).catch((err) => {
-    //         console.log(err)
-    //       })
-
-    //     },
-    //   });
-    // };
-
     // input search
     const [filterData, setFilterData] = useState(dataSource);
     const inputChange = (e: any) => {
@@ -241,23 +204,28 @@ const InvoiceFileUpload = () => {
             })
         );
     };
+    console.log('fileInputData', fileInputData.file);
 
     // form submit
     const onFinish = (values: any) => {
+        console.log('✌️values --->', values);
 
         const Token = localStorage.getItem('token');
 
+        // Append the file from the values object
         const formData = new FormData();
-        formData.append('file', values.file.file.originFileObj);
+        formData.append('file', fileInputData.file);
+
         if (values.invoice !== undefined) {
             formData.append('invoice', values.invoice);
         }
-
         formData.append('category', values.category);
-
         if (values.expense !== undefined) {
             formData.append('expense', values.expense);
         }
+
+        console.log('formData', formData);
+
         if (editRecord) {
             axios
                 .put(`http://files.covaiciviltechlab.com/edit_invoice_file_upload/${editRecord.id}/`, formData, {
@@ -267,6 +235,7 @@ const InvoiceFileUpload = () => {
                     },
                 })
                 .then((res: any) => {
+                    console.log('✌️res --->', res);
                     getFileUpload();
                     setOpen(false);
                 })
@@ -286,19 +255,19 @@ const InvoiceFileUpload = () => {
                 .then((res: any) => {
                     getFileUpload();
                     setOpen(false);
+                    setFileShow('');
                 })
                 .catch((error: any) => {
                     if (error.response.status === 401) {
                         router.push('/');
-                    } 
+                    }
                 });
             form.resetFields();
         }
         onClose();
     };
 
-    const onFinishFailed = (errorInfo: any) => {
-    };
+    const onFinishFailed = (errorInfo: any) => {};
 
     // Model Data
     const modalData = () => {
@@ -359,44 +328,39 @@ const InvoiceFileUpload = () => {
         return data;
     };
 
-    // file upload
-    const { Dragger } = Upload;
-
-    const allowedFileTypes = ['application/pdf', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
-
-    const handleRemove = (file: any) => {
-        // Update the file list by filtering out the removed file
-        setFileList((prevFileList) => prevFileList.filter((item: any) => item.uid !== file.uid));
-    };
-    const props: UploadProps = {
-        name: 'file',
-        multiple: false, // Set to false to allow only a single file upload
-        fileList: fileList,
-        beforeUpload: (file) => {
-            const fileType = file.type;
-            if (!allowedFileTypes.includes(fileType)) {
-                message.error('Only PDF and Excel files are allowed!');
-                return false; // Prevent the file from being uploaded
-            }
-
-            return true; // Allow the file to be uploaded
-        },
-        onChange(info: any) {
-            const { status } = info.file;
-            if (status === 'done') {
-                message.success(`${info.file.name} file uploaded successfully.`);
-            } else if (status === 'error') {
-                message.error(`${info.file.name} file upload failed.`);
-            }
-            setFileList(info.fileList);
-        },
-        onRemove: handleRemove,
-    };
-
     const scrollConfig: any = {
         x: true,
         y: 300,
     };
+
+    const removeFile = () => {
+        setFileShow('');
+    };
+
+
+    const selectFileChange = (e: any) => {
+        const file = e.target.files[0];
+        if (file) {
+            const fileType = file.type;
+            const fileSize = file.size / 1024 / 1024; // Convert size to MB
+            if (fileType === 'application/pdf' || fileType.includes('spreadsheet')) {
+                if (fileSize <= 2) {
+                    setFileInputData({ file });
+                } else {
+                    // Display error message or handle the invalid file size
+                    console.log('File size exceeds the limit of 2 MB.');
+                    setErrorMessage('File size exceeds the limit of 2 MB.');
+                }
+            } else {
+                // Display error message or handle the invalid file type
+                console.log('Invalid file type. Please select a PDF or Excel sheet file.');
+            }
+        }
+    }
+
+    const url = fileshow;
+    const filenames = url.substring(url.lastIndexOf('/') + 1); // Extracts the filename from the URL
+    const fileType = filenames.substring(filenames.lastIndexOf('.') + 1);
 
     return (
         <>
@@ -458,44 +422,29 @@ const InvoiceFileUpload = () => {
                             </Form.Item>
                         )}
 
-                        <Form.Item
-                            label="File"
-                            name="file"
-                            required={true}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please upload a single PDF or Excel file.',
-                                    validator: (_, value) => {
-                                        // Validate that the file is selected
-                                        if (!value || value.fileList.length === 0) {
-                                            return Promise.reject('Please upload a PDF or Excel file.');
-                                        }
-                                        // Validate that only a single file is selected
-                                        if (value.fileList.length > 1) {
-                                            return Promise.reject('Only one file is allowed.');
-                                        }
-                                        // Validate that the file type is allowed
-                                        const fileType = value.fileList[0].type;
-                                        if (!allowedFileTypes.includes(fileType)) {
-                                            return Promise.reject('Only PDF and Excel files are allowed.');
-                                        }
-                                        return Promise.resolve();
-                                    },
-                                },
-                            ]}
-                        >
-                            <Dragger {...props}>
-                                <p className="ant-upload-drag-icon">
-                                    <InboxOutlined rev={undefined} />
-                                </p>
-                                <p className="ant-upload-drag-icon">Drag & Drop or Click to Upload</p>
-                                <p className="ant-upload-text">Only single PDF or Excel file allowed</p>
-                            </Dragger>
-                        </Form.Item>
+                        <label>Invoice File Upload</label>
+                        {fileshow ? (
+                            <>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <p style={{ padding: '5px 20px', border: '1px solid #d9d9d9', borderRadius: '7px' }}>{filenames}</p>
+                                    <Button onClick={() => removeFile()}>Remove File</Button>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <input
+                                    type="file"
+                                    name="file"
+                                    accept=".pdf, .xls, .xlsx"
+                                    onChange={selectFileChange}
+                                    required
+                                />
+                                <p style={{ color: 'red' }}>{errorMessage}</p>
+                            </>
+                        )}
 
                         <Form.Item>
-                            <div className="form-btn-main">
+                            <div className="form-btn-main" style={{ marginTop: '20px' }}>
                                 <Space>
                                     <Button danger htmlType="submit" onClick={() => onClose()}>
                                         Cancel

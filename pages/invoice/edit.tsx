@@ -101,7 +101,7 @@ const Edit = () => {
         const selectedPercentages = invoiceFormData?.taxs?.filter((item: any) => checkedItems[item.id]);
 
         if (selectedPercentages?.length > 0) {
-            const percentagesArray = selectedPercentages.map((item: any) => parseFloat(item.tax_percentage));
+            const percentagesArray = selectedPercentages.map((item: any) => `${parseFloat(item.tax_percentage)}%`);
             const selectedName = selectedPercentages.map((item: any) => item.tax_name);
             const nameString = selectedName.join(' + ');
 

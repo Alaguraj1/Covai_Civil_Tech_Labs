@@ -7,7 +7,7 @@ import * as FileSaver from 'file-saver';
 import dayjs from 'dayjs';
 import router from 'next/router';
 
-const ExpenseFileReport = () => {
+const InvoiceFileReport = () => {
     const [form] = Form.useForm();
     const [dataSource, setDataSource] = useState([]);
     const [saleFormData, setSaleFormData] = useState([]);
@@ -39,18 +39,26 @@ const ExpenseFileReport = () => {
     // Table Headers
     const columns = [
         {
-            title: 'Expense User',
-            dataIndex: 'expense_user',
-            key: 'expense_user',
+            title: 'Customer Name',
+            dataIndex: 'invoice_customer',
+            key: 'invoice_customer',
             className: 'singleLineCell',
         },
         {
-            title: 'Expense Amount',
-            dataIndex: 'expense_amount',
-            key: 'expense_amount',
+            title: 'Invoice No',
+            dataIndex: 'invoice_no',
+            key: 'invoice_no',
             className: 'singleLineCell',
             width: 150,
         },
+        {
+            title: 'Invoice Amount',
+            dataIndex: 'invoice_amount',
+            key: 'invoice_amount',
+            className: 'singleLineCell',
+            width: 150,
+        },
+     
         {
             title: 'File',
             dataIndex: 'file',
@@ -61,9 +69,9 @@ const ExpenseFileReport = () => {
             ),
         },
         {
-            title: 'Expense Date',
-            dataIndex: 'expense_date',
-            key: 'expense_date',
+            title: 'Invoice Date',
+            dataIndex: 'invoice_date',
+            key: 'invoice_date',
             className: 'singleLineCell',
         },
     ];
@@ -104,7 +112,7 @@ const ExpenseFileReport = () => {
         };
 
         axios
-            .post('http://files.covaiciviltechlab.com/expense_file_report/', body, {
+            .post('http://files.covaiciviltechlab.com/invoice_file_report/', body, {
                 headers: {
                     Authorization: `Token ${Token}`,
                 },
@@ -132,7 +140,7 @@ const ExpenseFileReport = () => {
         };
 
         axios
-            .post('http://files.covaiciviltechlab.com/expense_file_report/', body, {
+            .post('http://files.covaiciviltechlab.com/invoice_file_report/', body, {
                 headers: {
                     Authorization: `Token ${Token}`,
                 },
@@ -232,7 +240,7 @@ const ExpenseFileReport = () => {
                 </div>
                 <div className="tax-heading-main">
                     <div>
-                        <h1 className="text-lg font-semibold dark:text-white-light">Expense File Report</h1>
+                        <h1 className="text-lg font-semibold dark:text-white-light">Invoice File Report</h1>
                     </div>
                     <div>
                         <Space>
@@ -254,4 +262,4 @@ const ExpenseFileReport = () => {
     );
 };
 
-export default ExpenseFileReport;
+export default InvoiceFileReport;
