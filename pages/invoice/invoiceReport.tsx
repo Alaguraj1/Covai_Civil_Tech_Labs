@@ -81,7 +81,7 @@ const InvoiceReport = () => {
                 setSelectedId(filter[0].id);
             })
             .catch((error: any) => {
-                if (error.response.status === 401) {
+                if (error?.response?.status === 401) {
                     router.push('/');
                 }
             });

@@ -885,8 +885,8 @@ table tbody tr {
 .invoice-table table tr:nth-child(2n+1) {
     background-color: rgb(224 230 237 / 0.2) !important;
   }
-.invoice-table table tr th{text-align: left;}
-.invoice-table table tr td{ padding: 0.75rem 1rem;}
+.invoice-table table tr th{text-align: left; padding: 3px 0.75rem;}
+.invoice-table table tr td{ padding: 1px 1rem;}
 
 
 

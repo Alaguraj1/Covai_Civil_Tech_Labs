@@ -86,7 +86,7 @@ const Preview = () => {
                         __html: '\n.style3 {\n\tfont-size: 22px;\n\tfont-weight: bold;\n}\n\ntable td, th {\n\tfont-size: 13px;\n}\n',
                     }}
                 />
-                <div className="container" style={{ padding: '30px 0px' }}>
+                <div className="container" style={{ padding: '10px 0px' }}>
                     <div className="panel">
                         <div className="flex grid-cols-3 flex-wrap justify-between gap-4 px-4">
                             <div>
@@ -94,12 +94,12 @@ const Preview = () => {
                                 <p>Invoice No : {printData?.invoice?.invoice_no}</p>
                             </div>
 
-                            <div className="grid-cols-9 px-7 ltr:text-right rtl:text-left">
-                                <div className="shrink-0">
-                                    <img src="/assets/images/logo-in.png" alt="img" className="w-17 ltr:ml-auto rtl:mr-auto" />
+                            <div className="grid-cols-9 pl-7 ltr:text-right rtl:text-left">
+                                <div className="shrink-0" style={{display:"flex", justifyContent:"end"}}>
+                                    <img src="/assets/images/logo-in.png" alt="img" style={{width:"75%"}} className="w-17 ltr:ml-auto rtl:mr-auto" />
                                 </div>
                                 <div className="mt-0 space-y-1 text-right text-white-dark">
-                                    <div>
+                                    <div style={{fontSize:"14px"}}> 
                                         <b>AN ISO 9001:2008 CERTIFIED LAB</b>
                                         <br></br>
                                         411/4, Ballu Naidu Thottam,Vijayalakshmi Nagar,<br></br>
@@ -110,8 +110,8 @@ const Preview = () => {
                             </div>
                         </div>
 
-                        <hr className="my-6 border-white-light dark:border-[#1b2e4b]" />
-                        <div className="preview-header text-sm">
+                        <hr className="my-2 border-white-light dark:border-[#1b2e4b]" />
+                        <div className="preview-header " style={{fontSize:"12px"}}>
                             <div className="flex-1">
                                 <div className="space-y-1 text-white-dark">
                                     <div>Issue For:</div>
@@ -129,39 +129,39 @@ const Preview = () => {
                             </div>
                             <div className="flex flex-col justify-between gap-6 sm:flex-row lg:w-2/3">
                                 <div className="xl:1/3 sm:w-1/2 lg:w-2/5">
-                                    <div className="mb-2 flex w-full items-center justify-between">
+                                    <div className="mb-1 flex w-full items-center justify-between">
                                         <div className="text-white-dark">Issue Date :</div>
                                         <div>{printData?.invoice?.date}</div>
                                     </div>
 
-                                    <div className="mb-2 flex w-full items-center justify-between">
+                                    <div className="mb-1 flex w-full items-center justify-between">
                                         <div className="text-white-dark">Project Name :</div>
                                         <div>{printData?.invoice?.project_name}</div>
                                     </div>
-                                    <div className="mb-2 flex w-full items-center justify-between">
+                                    <div className="mb-1 flex w-full items-center justify-between">
                                         <div className="text-white-dark">Place of Testing :</div>
                                         <div>{printData?.invoice?.place_of_testing}</div>
                                     </div>
-                                    <div className="mb-2 flex w-full items-center justify-between">
+                                    <div className="mb-1 flex w-full items-center justify-between">
                                         <div className="text-white-dark"> GSTIN/UIN :</div>
                                         <div>{printData?.customer?.gstin_no}</div>
                                     </div>
                                 </div>
 
                                 <div className="xl:1/3 sm:w-1/2 lg:w-2/5">
-                                    <div className="mb-2 flex w-full items-center justify-between">
+                                    <div className="mb-1 flex w-full items-center justify-between">
                                         <div className="text-white-dark">Name:</div>
                                         <div className="whitespace-nowrap">Covai Civil Tech Lab</div>
                                     </div>
-                                    <div className="mb-2 flex w-full items-center justify-between">
+                                    <div className="mb-1 flex w-full items-center justify-between">
                                         <div className="text-white-dark">Account Number:</div>
                                         <div>584705000004</div>
                                     </div>
-                                    <div className="mb-2 flex w-full items-center justify-between">
+                                    <div className="mb-1 flex w-full items-center justify-between">
                                         <div className="text-white-dark">Branch:</div>
                                         <div>Saibaba colony branch, coimbatore.</div>
                                     </div>
-                                    <div className="mb-2 flex w-full items-center justify-between">
+                                    <div className="mb-1 flex w-full items-center justify-between">
                                         <div className="text-white-dark">IFSC Code:</div>
                                         <div>ICIC0001550</div>
                                     </div>
@@ -169,7 +169,7 @@ const Preview = () => {
                             </div>
                         </div>
 
-                        <div className="table-responsive invoice-table mt-6">
+                        <div className="table-responsive invoice-table mt-3">
                             <table className="table-striped">
                                 <thead style={{ border: '1px solid black' }}>
                                     <tr>
@@ -182,11 +182,10 @@ const Preview = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {printData?.invoice_tests?.map((invoice: any, index: any) => {
-                                        return (
+                                    {printData?.invoice_tests?.map((invoice: any, index: any) => {                                        return (
                                             <>
                                                 <tr style={{ border: '1px solid black' }}>
-                                                    <td style={{ border: '1px solid black' }}>{index}</td>
+                                                    <td style={{ border: '1px solid black' }}>{index + 1}</td>
                                                     <td style={{ border: '1px solid black' }}>
                                                         {invoice?.test_name} - <span style={{ fontWeight: 'bold' }}>{invoice?.material_name}</span>
                                                     </td>
@@ -246,7 +245,7 @@ const Preview = () => {
                         </div>
 
                         {/*footer */}
-                        <hr className="my-6 border-white-light dark:border-[#1b2e4b]" />
+                        <hr className="my-2 border-white-light dark:border-[#1b2e4b]" />
                         <div className="preview-footer-main">
                             <div className="preview-qr-outer">
                                 <img src="/assets/images/Sponsor.jpg" style={{ textAlign: 'center', width: '120px', height: '100px' }} alt="image" />
@@ -261,7 +260,7 @@ const Preview = () => {
                                     COVAI CIVIL TECH LAB <br /> G.GOVARDHAN,.BE (CIVIL) <br /> MANAGER
                                     {/* <img src="/assets/images/logo_3.jpg" alt="img" style={{ marginLeft: "auto" }} /> */}
                                     <div className="mt-0 space-y-1 text-right text-sm text-white-dark">
-                                        <br /> <b>Phone</b> : <a href="tel:9840014193"> 9840014193 </a>|<br />
+                                        <b>Phone</b> : <a href="tel:9840014193"> 9840014193 </a>|<br />
                                         <i>
                                             <b>Email :</b>{' '}
                                             <a href="mailto:cbe@covaiciviltechlab.com" target="_blank">
@@ -283,12 +282,12 @@ const Preview = () => {
                     </div>
                 </div>
 
-                <div className="container text-sm">
+                <div className="container" style={{fontSize:"14px"}}>
                     {' '}
-                    <div style={{ textAlign: 'center', paddingTop: '15px' }}>
+                    <div style={{ textAlign: 'center', paddingTop: '10px' }}>
                         <b>Declaration:-</b> We declare that this invoice shows the actual price of the Test Services described and that all particulars are true and correct. <br /> <br />
                     </div>
-                    <div style={{ textAlign: 'center' }}>
+                    <div style={{ textAlign: 'center', fontSize:"12px" }}>
                         SUBJECT TO COIMBATORE JURISDICTION
                         <br /> This is computer Generated Invoice.
                     </div>
