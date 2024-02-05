@@ -618,6 +618,56 @@ const Edit = () => {
             });
     };
 
+
+    // checking
+    const invoiceFormSubmit1 = () => {
+        const Token = localStorage.getItem('token');
+
+        const body = {
+            customer: formData.customer,
+            // "sales_mode": Number(formData.sales_mode),
+            project_name: formData.project_name,
+            discount: formData.discount,
+            tax: selectedIDs,
+            total_amount: parseInt(afterTax, 10),
+            advance: advance,
+            balance: parseInt(balance, 10),
+            amount_paid_date: formData.amount_paid_date,
+            bank: formData.bank,
+            cheque_number: formData.cheque_number,
+            payment_mode: formData.payment_mode,
+            date: formData.date,
+            place_of_testing: formData.place_of_testing,
+            upi: formData.upi,
+            completed: formData.completed,
+        };
+
+        axios
+            .put(`http://files.covaiciviltechlab.com/edit_invoice/${id}/`, body, {
+                headers: {
+                    Authorization: `Token ${Token}`,
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then((response) => {
+                getInvoiceTestData();
+                // messageApi.open({
+                //     type: 'success',
+                //     content: 'Invoice Successfully Updated',
+                // });
+            })
+            .catch((error) => {
+                if (error?.response?.status === 401) {
+                    router.push('/');
+                } else {
+                    // messageApi.open({
+                    //     type: 'error',
+                    //     content: 'Invoice Updated Failed',
+                    // });
+                }
+            });
+    };
+
     const handleSelectChange = (e: any) => {
         // Find the selected customer in the data array
         const selectedCustomer = invoiceFormData?.customers?.find((customer: any) => customer.id == Number(e.target.value));
@@ -680,7 +730,7 @@ const Edit = () => {
                 total: Number(item.total.toFixed(2)),
             })),
         };
-
+        invoiceFormSubmit1()
         axios
             .post('http://files.covaiciviltechlab.com/create_invoice_test/', body?.tests, {
                 headers: {
@@ -711,6 +761,7 @@ const Edit = () => {
             okText: 'Yes',
             okType: 'danger',
             onOk: () => {
+                invoiceFormSubmit1()
                 axios
                     .delete(`http://files.covaiciviltechlab.com/delete_invoice_test/${id}`, {
                         headers: {
@@ -732,7 +783,7 @@ const Edit = () => {
     // invoice test edit form onfinish
     const onFinish2 = (values: any) => {
         const Token = localStorage.getItem('token');
-
+        invoiceFormSubmit1()
         axios
             .put(`http://files.covaiciviltechlab.com/edit_invoice_test/${editRecord.id}/`, values, {
                 headers: {
@@ -849,6 +900,7 @@ const Edit = () => {
             });
             return;
         } else {
+            invoiceFormSubmit(e);
             axios
                 .post(`http://files.covaiciviltechlab.com/add_payment/${id}/`, paymentFormData, {
                     headers: {
@@ -900,6 +952,7 @@ const Edit = () => {
             });
             return;
         }
+        invoiceFormSubmit(e);
 
         axios
             .put(`http://files.covaiciviltechlab.com/edit_payment/${paymentEditRecord?.id}/`, paymentFormData, {
@@ -908,6 +961,7 @@ const Edit = () => {
                 },
             })
             .then((res: any) => {
+
                 const totalAmount = res.data.payments.reduce((accumulator: any, current: any) => {
                     const amountValue = parseFloat(current.amount);
 
@@ -934,11 +988,14 @@ const Edit = () => {
     const PaymentDelete = (id: any) => {
         const Token = localStorage.getItem('token');
 
+        invoiceFormSubmit1()
         Modal.confirm({
             title: 'Are you sure to delete the TEST record?',
             okText: 'Yes',
             okType: 'danger',
             onOk: () => {
+                
+
                 axios
                     .delete(`http://files.covaiciviltechlab.com/delete_payment/${id}`, {
                         headers: {
@@ -947,6 +1004,7 @@ const Edit = () => {
                     })
                     .then((res) => {
                         getInvoiceTestData2();
+
                     })
                     .catch((error) => {
                         if (error?.response?.status === 401) {
