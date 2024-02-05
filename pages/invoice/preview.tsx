@@ -251,9 +251,17 @@ const Preview = () => {
                             <div className="preview-qr-outer">
                                 <img src="/assets/images/Sponsor.jpg" style={{ textAlign: 'center', width: '120px', height: '100px' }} alt="image" />
                             </div>
-                            <div className="preview-qr-outer">
-                                <img src={printData?.invoice?.qr} style={{ textAlign: 'center', width: '120px', height: '120px' }} alt="image" />
-                            </div>
+
+                            {printData?.invoice?.invoice_no === null ? (
+                                <></>
+                            ) : (
+                                <>
+                                    <div className="preview-qr-outer">
+                                        <img src={printData?.invoice?.qr} style={{ textAlign: 'center', width: '120px', height: '120px' }} alt="image" />
+                                    </div>
+                                </>
+                            )}
+
                             <div className="preview-qr-outer">
                                 <div className="mt-0 grid-cols-9 space-y-1 text-right text-right text-sm text-white-dark">
                                     <img src="/assets/images/sign.png" alt="img" style={{ marginLeft: 'auto' }} />
