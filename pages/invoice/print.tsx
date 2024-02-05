@@ -91,16 +91,17 @@ const Print = () => {
                     setInvoiceReport(res.data);
                 })
                 .catch((error) => {
-                    if (error.response.status === 401) {
+                    if (error?.response?.status === 401) {
                         router.push('/');
                     } 
                 });
         }
     };
+console.log("finalHTML",finalHtml)
 
     return (
         <>
-            <div style={{ padding: '50px 100px' }}>
+            <div style={{ padding: '10px 10px' }}>
                 <div dangerouslySetInnerHTML={{ __html: finalHtml }}></div>
             </div>
         </>

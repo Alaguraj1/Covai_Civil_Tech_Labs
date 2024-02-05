@@ -100,7 +100,7 @@ const Print1 = () => {
 
     return (
         <>
-            <div style={{ padding: '50px 100px' }}>
+            <div style={{ padding: '10px 10px' }}>
                 <div dangerouslySetInnerHTML={{ __html: finalHtml }}></div>
             </div>
         </>

@@ -154,7 +154,7 @@ const InvoiceReport = () => {
 
     // Print
     const goBack = () => {
-        window.location.href = `/invoice/edit?id=${invoiceReport.invoice.id}`;
+        window.location.href = `/invoice/edit?id=${invoiceReport?.invoice?.id}`;
     };
 
     const inputChange = (e: any) => {

@@ -210,7 +210,7 @@ const Edit = () => {
                 setBalance(parseInt(InitialBalance, 10));
             })
             .catch((error: any) => {
-                if (error.response.status === 401) {
+                if (error?.response?.status === 401) {
                     router.push('/');
                 } else {
                 }
@@ -297,7 +297,7 @@ const Edit = () => {
                 setBalance(parseInt(InitialBalance, 10));
             })
             .catch((error: any) => {
-                if (error.response.status === 401) {
+                if (error?.response?.status === 401) {
                     router.push('/');
                 } 
             });
@@ -413,7 +413,7 @@ const Edit = () => {
                 setTestFormData(res.data);
             })
             .catch((error: any) => {
-                if (error.response.status === 401) {
+                if (error?.response?.status === 401) {
                     router.push('/');
                 } 
             });
@@ -579,7 +579,7 @@ const Edit = () => {
                 });
             })
             .catch((error) => {
-                if (error.response.status === 401) {
+                if (error?.response?.status === 401) {
                     router.push('/');
                 } else {
                     messageApi.open({
@@ -668,7 +668,7 @@ const onFinish = (values: any) => {
             form1.resetFields();
         })
         .catch((error) => {
-            if (error.response.status === 401) {
+            if (error?.response?.status === 401) {
                 router.push('/');
             } else {
             }
@@ -697,7 +697,7 @@ const onFinishFailed = (errorInfo: any) => {
                         getInvoiceTestData2();
                     })
                     .catch((error) => {
-                        if (error.response.status === 401) {
+                        if (error?.response?.status === 401) {
                             router.push('/');
                         } 
                     });
@@ -720,14 +720,9 @@ const onFinishFailed = (errorInfo: any) => {
                 setOpen(false);
             })
             .catch((error: any) => {
-                if (error.response.status === 401) {
+                if (error?.response?.status === 401) {
                     router.push('/');
-                } else {
-                    if (error.response.status === 401) {
-                        router.push('/');
-                    } else {
-                    }
-                }
+                } 
             });
         onClose();
     };
@@ -864,7 +859,7 @@ const paymentCancel = () => {
                     setBalance(parseInt(InitialBalance, 10));
                 })
                 .catch((error: any) => {
-                    if (error.response.status === 401) {
+                    if (error?.response?.status === 401) {
                         router.push('/');
                     } else {
                     }
@@ -906,7 +901,7 @@ const paymentCancel = () => {
                 setOpen2(false);
             })
             .catch((error: any) => {
-                if (error.response.status === 401) {
+                if (error?.response?.status === 401) {
                     router.push('/');
                 } else {
                 }
@@ -933,7 +928,7 @@ const paymentCancel = () => {
                         getInvoiceTestData2();
                     })
                     .catch((error) => {
-                        if (error.response.status === 401) {
+                        if (error?.response?.status === 401) {
                             router.push('/');
                         } else {
                         }
