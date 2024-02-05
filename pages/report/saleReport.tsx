@@ -24,7 +24,7 @@ const SaleReport = () => {
             .catch((error: any) => {
                 if (error.response.status === 401) {
                     router.push('/');
-                } 
+                }
             });
     }, []);
 
@@ -131,7 +131,7 @@ const SaleReport = () => {
             .catch((error: any) => {
                 if (error.response.status === 401) {
                     router.push('/');
-                } 
+                }
             });
     }, []);
 
@@ -163,8 +163,7 @@ const SaleReport = () => {
         form.resetFields();
     };
 
-    const onFinishFailed = (errorInfo: any) => {
-    };
+    const onFinishFailed = (errorInfo: any) => {};
 
     type FieldType = {
         project_name?: string;
@@ -222,7 +221,7 @@ const SaleReport = () => {
                             </Form.Item>
 
                             <Form.Item label="Customer" name="customer" style={{ width: '300px' }}>
-                                <Select>
+                                <Select showSearch filterOption={(input: any, option: any) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
                                     {saleFormData?.map((value: any) => (
                                         <Select.Option key={value.id} value={value.id}>
                                             {value.customer_name}

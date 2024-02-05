@@ -19,7 +19,6 @@ const Customer = () => {
     const [formFields, setFormFields] = useState<any>([]);
     const [filterData, setFilterData] = useState(dataSource);
 
-
     useEffect(() => {
         getCustomer();
         getDropDownValues();
@@ -47,7 +46,7 @@ const Customer = () => {
             .catch((error: any) => {
                 if (error.response.status === 401) {
                     router.push('/');
-                } 
+                }
             });
     };
 
@@ -66,7 +65,7 @@ const Customer = () => {
                 if (error.response.status === 401) {
                     // Navigate to the home page
                     router.push('/');
-                } 
+                }
             });
     };
 
@@ -102,7 +101,7 @@ const Customer = () => {
                     if (error.response.status === 401) {
                         // Navigate to the home page
                         router.push('/');
-                    } 
+                    }
                 });
         } else {
             setEditRecord(null);
@@ -248,8 +247,7 @@ const Customer = () => {
         }
         onClose();
     };
-    const onFinishFailed = (errorInfo: any) => {
-    };
+    const onFinishFailed = (errorInfo: any) => {};
 
     type FieldType = {
         customer_name?: string;
@@ -370,7 +368,7 @@ const Customer = () => {
                 label: 'contact_person Email 1:',
                 value: viewRecord?.contact_person_email1 || 'N/A',
             },
-        {
+            {
                 label: 'contact Person 2:',
                 value: viewRecord?.contact_person2 || 'N/A',
             },
@@ -439,7 +437,7 @@ const Customer = () => {
                         </Form.Item>
 
                         <Form.Item<FieldType> label="Phone Number" name="phone_no" required={true} rules={[{ required: true, message: 'Please input your Phone Number!' }]}>
-                            <InputNumber minLength={10} maxLength={10} style={{width:"100%"}}/>
+                            <InputNumber minLength={10} maxLength={10} style={{ width: '100%' }} />
                         </Form.Item>
 
                         <Form.Item<FieldType> label="GST in" name="gstin_no" required={true} rules={[{ required: true, message: 'Please input your GST in!' }]}>
@@ -455,7 +453,7 @@ const Customer = () => {
                         </Form.Item>
 
                         <Form.Item<FieldType> label="City 1" name="city1" required={true} rules={[{ required: true, message: 'Please input your City 1!' }]}>
-                            <Select>
+                            <Select showSearch filterOption={(input: any, option: any) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
                                 {formFields?.city1?.map((val: any) => (
                                     <Select.Option key={val.name} value={val.id}>
                                         {val.name}
@@ -465,7 +463,7 @@ const Customer = () => {
                         </Form.Item>
 
                         <Form.Item<FieldType> label="State 1" name="state1" required={true} rules={[{ required: true, message: 'Please input your State 1!' }]}>
-                            <Select>
+                            <Select showSearch filterOption={(input: any, option: any) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
                                 {formFields?.state1?.map((val: any) => (
                                     <Select.Option key={val.name} value={val.id}>
                                         {val.name}
@@ -475,7 +473,7 @@ const Customer = () => {
                         </Form.Item>
 
                         <Form.Item<FieldType> label="Country 1" name="country1" required={true} rules={[{ required: true, message: 'Please input your Country 1!' }]}>
-                            <Select>
+                            <Select showSearch filterOption={(input: any, option: any) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
                                 {formFields?.country1?.map((val: any) => (
                                     <Select.Option key={val.name} value={val.id}>
                                         {val.name}
@@ -485,7 +483,7 @@ const Customer = () => {
                         </Form.Item>
 
                         <Form.Item<FieldType> label="Pincode 1" name="pincode1" required={true} rules={[{ required: true, message: 'Please input your Pincode 1!' }]}>
-                            <InputNumber maxLength={6} style={{width:"100%"}}/>
+                            <InputNumber maxLength={6} style={{ width: '100%' }} />
                         </Form.Item>
 
                         <Form.Item<FieldType> label="Address 2" name="address2" required={false} rules={[{ required: false, message: 'Please input your Address 2!' }]}>
@@ -493,7 +491,7 @@ const Customer = () => {
                         </Form.Item>
 
                         <Form.Item<FieldType> label="City 2" name="city2" required={false} rules={[{ required: false, message: 'Please input your City 2!' }]}>
-                            <Select>
+                            <Select showSearch filterOption={(input: any, option: any) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
                                 {formFields?.city2?.map((val: any) => (
                                     <Select.Option key={val.name} value={val.id}>
                                         {val.name}
@@ -503,7 +501,7 @@ const Customer = () => {
                         </Form.Item>
 
                         <Form.Item<FieldType> label="State 2" name="state2" required={false} rules={[{ required: false, message: 'Please input your State 2!' }]}>
-                            <Select>
+                            <Select showSearch filterOption={(input: any, option: any) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
                                 {formFields?.state2?.map((val: any) => (
                                     <Select.Option key={val.name} value={val.id}>
                                         {val.name}
@@ -513,7 +511,7 @@ const Customer = () => {
                         </Form.Item>
 
                         <Form.Item<FieldType> label="Country 2" name="country2" required={false} rules={[{ required: false, message: 'Please input your Country 2!' }]}>
-                            <Select>
+                            <Select showSearch filterOption={(input: any, option: any) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
                                 {formFields?.country2?.map((val: any) => (
                                     <Select.Option key={val.name} value={val.id}>
                                         {val.name}
@@ -523,15 +521,15 @@ const Customer = () => {
                         </Form.Item>
 
                         <Form.Item<FieldType> label="Pincode 2" name="pincode2" required={false} rules={[{ required: false, message: 'Please input your Pincode 2!' }]}>
-                            <InputNumber maxLength={6} style={{width:"100%"}}/>
+                            <InputNumber maxLength={6} style={{ width: '100%' }} />
                         </Form.Item>
 
-                       <Form.Item<FieldType> label="Contact Person 1" name="contact_person1" required={false} rules={[{ required: false, message: 'Please input your Contact Person 1!' }]}>
+                        <Form.Item<FieldType> label="Contact Person 1" name="contact_person1" required={false} rules={[{ required: false, message: 'Please input your Contact Person 1!' }]}>
                             <Input />
                         </Form.Item>
 
                         <Form.Item<FieldType> label="Mobile Number 1" name="mobile_no1" required={false} rules={[{ required: false, message: 'Please input your Mobile Number 1!' }]}>
-                            <InputNumber maxLength={10} minLength={10} style={{width:"100%"}}/>
+                            <InputNumber maxLength={10} minLength={10} style={{ width: '100%' }} />
                         </Form.Item>
 
                         <Form.Item<FieldType>
@@ -548,7 +546,7 @@ const Customer = () => {
                         </Form.Item>
 
                         <Form.Item<FieldType> label="Mobile Number 2" name="mobile_no2" required={false} rules={[{ required: false, message: 'Please input your Mobile Number 2!' }]}>
-                            <InputNumber maxLength={10} minLength={10} style={{width:"100%"}}/>
+                            <InputNumber maxLength={10} minLength={10} style={{ width: '100%' }} />
                         </Form.Item>
 
                         <Form.Item<FieldType>

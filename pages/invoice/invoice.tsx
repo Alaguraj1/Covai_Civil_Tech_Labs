@@ -70,7 +70,7 @@ const Invoice = () => {
 
     const columns = [
         {
-            title: 'Invoice N0',
+            title: 'Invoice No',
             dataIndex: 'invoice_no',
             key: 'invoice_no',
             className: 'singleLineCell',
@@ -221,7 +221,7 @@ const Invoice = () => {
                 },
             })
             .then((res) => {
-                initialData()
+                initialData();
                 window.location.href = `/invoice/edit?id=${res?.data?.id}`;
                 setOpen(false);
             })
@@ -252,7 +252,7 @@ const Invoice = () => {
     // search
 
     useEffect(() => {
-        initialData()
+        initialData();
     }, []);
 
     const initialData = () => {
@@ -332,7 +332,7 @@ const Invoice = () => {
                             </Form.Item>
 
                             <Form.Item label="Customer" name="customer" style={{ width: '250px' }}>
-                                <Select>
+                                <Select showSearch filterOption={(input: any, option: any) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
                                     {formFields?.customer?.map((value: any) => (
                                         <Select.Option key={value.id} value={value.id}>
                                             {value.customer_name}
@@ -384,7 +384,15 @@ const Invoice = () => {
                 <Drawer title="Create Invoice" placement="right" width={600} onClose={onClose} open={open}>
                     <Form name="basic-form" layout="vertical" initialValues={{ remember: true }} onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off" form={form}>
                         <Form.Item label="Customer Name" name="customer" required={false} rules={[{ required: true, message: 'Please select Customer Name!' }]}>
-                            <Select onChange={handleSelectChange} placeholder="Select a customer" value={selectedCustomerId}>
+                            <Select
+                                onChange={handleSelectChange}
+                                placeholder="Select a customer"
+                                value={selectedCustomerId}
+                                showSearch
+                                filterOption={(input, option: any) =>
+                                    option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0 || option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                }
+                            >
                                 {formFields?.customer?.map((val: any) => (
                                     <Select.Option key={val.id} value={val.id}>
                                         {val.customer_name} - {val.phone_no}

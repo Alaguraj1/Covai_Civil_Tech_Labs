@@ -97,7 +97,6 @@ const Print = () => {
                 });
         }
     };
-console.log("finalHTML",finalHtml)
 
     return (
         <>

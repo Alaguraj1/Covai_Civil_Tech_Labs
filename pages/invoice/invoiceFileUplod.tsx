@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Space, Table, Modal } from 'antd';
+import { Space, Table, Modal, DatePicker } from 'antd';
 import { Button, Drawer } from 'antd';
 import { Form, Input, message, Upload, Select } from 'antd';
 import { EditOutlined, EyeOutlined, InboxOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import type { UploadProps } from 'antd';
 import router from 'next/router';
+import dayjs from 'dayjs';
 
 const InvoiceFileUpload = () => {
     const { Search } = Input;
@@ -52,31 +53,33 @@ const InvoiceFileUpload = () => {
         }
     }, [editRecord, open]);
 
+    console.log('formFields', formFields);
+
     // get Tax datas
-    useEffect(() => {
-        getFileUpload();
-    }, []);
+    // useEffect(() => {
+    //     getFileUpload();
+    // }, []);
 
-    const getFileUpload = () => {
-        const Token = localStorage.getItem('token');
+    // const getFileUpload = () => {
+    //     const Token = localStorage.getItem('token');
 
-        axios
-            .get('http://files.covaiciviltechlab.com/invoice_file_upload_list/', {
-                headers: {
-                    Authorization: `Token ${Token}`,
-                },
-            })
-            .then((res) => {
-                setDataSource(res?.data?.invoice_files);
-                setFilterData(res?.data?.invoice_files);
-            })
-            .catch((error: any) => {
-                if (error.response.status === 401) {
-                    router.push('/');
-                } else {
-                }
-            });
-    };
+    //     axios
+    //         .get('http://files.covaiciviltechlab.com/invoice_file_upload_list/', {
+    //             headers: {
+    //                 Authorization: `Token ${Token}`,
+    //             },
+    //         })
+    //         .then((res) => {
+    //             setDataSource(res?.data?.invoice_files);
+    //             setFilterData(res?.data?.invoice_files);
+    //         })
+    //         .catch((error: any) => {
+    //             if (error.response.status === 401) {
+    //                 router.push('/');
+    //             } else {
+    //             }
+    //         });
+    // };
 
     const handleCategoryChange = (value: any) => {
         setSelectedCategory(value);
@@ -192,19 +195,18 @@ const InvoiceFileUpload = () => {
     ];
 
     // input search
-    const [filterData, setFilterData] = useState(dataSource);
-    const inputChange = (e: any) => {
-        setFilterData(
-            dataSource.filter((item: any) => {
-                return (
-                    item.category_name.toLowerCase().includes(e.target.value.toLowerCase()) ||
-                    item?.expense_category?.toLowerCase().includes(e.target.value.toLowerCase()) ||
-                    item?.invoice_no?.includes(e.target.value)
-                );
-            })
-        );
-    };
-    console.log('fileInputData', fileInputData.file);
+    // const inputChange = (e: any) => {
+    //     setFilterData(
+    //         dataSource.filter((item: any) => {
+    //             return (
+    //                 item.category_name.toLowerCase().includes(e.target.value.toLowerCase()) ||
+    //                 item?.expense_category?.toLowerCase().includes(e.target.value.toLowerCase()) ||
+    //                 item?.invoice_no?.includes(e.target.value)
+    //             );
+    //         })
+    //     );
+    // };
+    // console.log('fileInputData', fileInputData.file);
 
     // form submit
     const onFinish = (values: any) => {
@@ -236,7 +238,7 @@ const InvoiceFileUpload = () => {
                 })
                 .then((res: any) => {
                     console.log('✌️res --->', res);
-                    getFileUpload();
+                    initialData();
                     setOpen(false);
                 })
                 .catch((error: any) => {
@@ -253,7 +255,7 @@ const InvoiceFileUpload = () => {
                     },
                 })
                 .then((res: any) => {
-                    getFileUpload();
+                    initialData();
                     setOpen(false);
                     setFileShow('');
                 })
@@ -337,7 +339,6 @@ const InvoiceFileUpload = () => {
         setFileShow('');
     };
 
-
     const selectFileChange = (e: any) => {
         const file = e.target.files[0];
         if (file) {
@@ -356,21 +357,137 @@ const InvoiceFileUpload = () => {
                 console.log('Invalid file type. Please select a PDF or Excel sheet file.');
             }
         }
-    }
+    };
 
     const url = fileshow;
     const filenames = url.substring(url.lastIndexOf('/') + 1); // Extracts the filename from the URL
     const fileType = filenames.substring(filenames.lastIndexOf('.') + 1);
 
+    // search
+
+    useEffect(() => {
+        initialData();
+    }, []);
+
+    const initialData = () => {
+        const Token = localStorage.getItem('token');
+        console.log('✌️Token --->', Token);
+
+        const body = {
+            invoice_no: '',
+            from_date: '',
+            to_date: '',
+            category: '',
+        };
+
+        console.log('✌️body --->', body);
+
+        axios
+            .post('http://files.covaiciviltechlab.com/invoice_file_upload_list/', body, {
+                headers: {
+                    Authorization: `Token ${Token}`,
+                },
+            })
+            .then((res: any) => {
+                console.log('✌️res --->', res);
+                setDataSource(res?.data.invoice_files);
+            })
+            .catch((error: any) => {
+                if (error.response.status === 401) {
+                    router.push('/');
+                }
+            });
+    };
+
+    // form submit
+    const onFinish2 = (values: any) => {
+        console.log('✌️values --->', values);
+        const Token = localStorage.getItem('token');
+
+        const body = {
+            invoice_no: values.invoice_no ? values.invoice_no : '',
+            from_date: values?.from_date ? dayjs(values?.from_date).format('YYYY-MM-DD') : '',
+            to_date: values?.to_date ? dayjs(values?.to_date).format('YYYY-MM-DD') : '',
+            category: values.category ? values.category : '',
+        };
+
+        console.log('✌️body --->', body);
+
+        axios
+            .post('http://files.covaiciviltechlab.com/invoice_file_upload_list/', body, {
+                headers: {
+                    Authorization: `Token ${Token}`,
+                },
+            })
+            .then((res: any) => {
+                console.log('✌️res --->', res);
+                setDataSource(res?.data?.invoice_files);
+            })
+            .catch((error: any) => {
+                if (error?.response?.status === 401) {
+                    router.push('/');
+                }
+            });
+        form.resetFields();
+    };
+
+    const onFinishFailed2 = (errorInfo: any) => {};
+
     return (
         <>
             <div className="panel">
+                <div>
+                    <Form name="basic" layout="vertical" form={form} initialValues={{ remember: true }} onFinish={onFinish2} onFinishFailed={onFinishFailed2} autoComplete="off">
+                        <div className="sale_report_inputs">
+                            <Form.Item label="Invoice No" name="invoice_no" style={{ width: '200px' }}>
+                                <Input />
+                            </Form.Item>
+
+                            <Form.Item label="Category" name="category" style={{ width: '250px' }}>
+                                <Select showSearch filterOption={(input: any, option: any) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+                                    {formFields?.categories?.map((value: any) => {
+                                        console.log('✌️value --->', value);
+
+                                        return (
+                                            <Select.Option key={value.id} value={value.id}>
+                                                {value.name}
+                                            </Select.Option>
+                                        );
+                                    })}
+                                </Select>
+                            </Form.Item>
+
+                            <Form.Item label="From Date" name="from_date" style={{ width: '200px' }}>
+                                <DatePicker style={{ width: '100%' }} />
+                            </Form.Item>
+
+                            <Form.Item label="To Date" name="to_date" style={{ width: '200px' }}>
+                                <DatePicker style={{ width: '100%' }} />
+                            </Form.Item>
+
+                            {/* <Form.Item label="Completed Test" name="completed" style={{ width: '200px' }}>
+                                <Select>
+                                    <Select.Option value="Yes">Yes</Select.Option>
+                                    <Select.Option value="No">No</Select.Option>
+                                </Select>
+                            </Form.Item> */}
+
+                            <div style={{ display: 'flex', alignItems: 'end' }}>
+                                <Form.Item>
+                                    <Button type="primary" htmlType="submit" style={{ width: '150px' }}>
+                                        Search
+                                    </Button>
+                                </Form.Item>
+                            </div>
+                        </div>
+                    </Form>
+                </div>
                 <div className="tax-heading-main">
                     <div>
                         <h1 className="text-lg font-semibold dark:text-white-light">Expense/Invoice File Upload</h1>
                     </div>
                     <div>
-                        <Search placeholder="Input search text" onChange={inputChange} enterButton className="search-bar" />
+                        {/* <Search placeholder="Input search text" onChange={inputChange} enterButton className="search-bar" /> */}
                         <button
                             type="button"
                             onClick={() => {
@@ -383,7 +500,7 @@ const InvoiceFileUpload = () => {
                     </div>
                 </div>
                 <div className="table-responsive">
-                    <Table dataSource={filterData} columns={columns} pagination={false} scroll={scrollConfig} />
+                    <Table dataSource={dataSource} columns={columns} pagination={false} scroll={scrollConfig} />
                 </div>
 
                 <Drawer title={drawerTitle} placement="right" width={600} onClose={onClose} open={open}>
@@ -432,13 +549,7 @@ const InvoiceFileUpload = () => {
                             </>
                         ) : (
                             <>
-                                <input
-                                    type="file"
-                                    name="file"
-                                    accept=".pdf, .xls, .xlsx"
-                                    onChange={selectFileChange}
-                                    required
-                                />
+                                <input type="file" name="file" accept=".pdf, .xls, .xlsx" onChange={selectFileChange} required />
                                 <p style={{ color: 'red' }}>{errorMessage}</p>
                             </>
                         )}

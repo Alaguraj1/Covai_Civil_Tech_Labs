@@ -36,7 +36,7 @@ const Preview = () => {
             .catch((error: any) => {
                 if (error.response.status === 401) {
                     router.push('/');
-                } 
+                }
             });
     }, [id]);
 
@@ -95,11 +95,11 @@ const Preview = () => {
                             </div>
 
                             <div className="grid-cols-9 pl-7 ltr:text-right rtl:text-left">
-                                <div className="shrink-0" style={{display:"flex", justifyContent:"end"}}>
-                                    <img src="/assets/images/logo-in.png" alt="img" style={{width:"75%"}} className="w-17 ltr:ml-auto rtl:mr-auto" />
+                                <div className="shrink-0" style={{ display: 'flex', justifyContent: 'end' }}>
+                                    <img src="/assets/images/logo-in.png" alt="img" style={{ width: '75%' }} className="w-17 ltr:ml-auto rtl:mr-auto" />
                                 </div>
                                 <div className="mt-0 space-y-1 text-right text-white-dark">
-                                    <div style={{fontSize:"14px"}}> 
+                                    <div style={{ fontSize: '14px' }}>
                                         <b>AN ISO 9001:2008 CERTIFIED LAB</b>
                                         <br></br>
                                         411/4, Ballu Naidu Thottam,Vijayalakshmi Nagar,<br></br>
@@ -111,7 +111,7 @@ const Preview = () => {
                         </div>
 
                         <hr className="my-2 border-white-light dark:border-[#1b2e4b]" />
-                        <div className="preview-header " style={{fontSize:"12px"}}>
+                        <div className="preview-header " style={{ fontSize: '12px' }}>
                             <div className="flex-1">
                                 <div className="space-y-1 text-white-dark">
                                     <div>Issue For:</div>
@@ -182,7 +182,8 @@ const Preview = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {printData?.invoice_tests?.map((invoice: any, index: any) => {                                        return (
+                                    {printData?.invoice_tests?.map((invoice: any, index: any) => {
+                                        return (
                                             <>
                                                 <tr style={{ border: '1px solid black' }}>
                                                     <td style={{ border: '1px solid black' }}>{index + 1}</td>
@@ -255,9 +256,9 @@ const Preview = () => {
                             </div>
                             <div className="preview-qr-outer">
                                 <div className="mt-0 grid-cols-9 space-y-1 text-right text-right text-sm text-white-dark">
-                                    <img src="/assets/images/sign.jpg" alt="img" style={{ marginLeft: 'auto' }} />
+                                    <img src="/assets/images/sign.png" alt="img" style={{ marginLeft: 'auto' }} />
                                     <br />
-                                    COVAI CIVIL TECH LAB <br /> G.GOVARDHAN,.BE (CIVIL) <br /> MANAGER
+                                    COVAI CIVIL TECH LAB <br /> R.TIRUMALAI <br /> TECHNICAL DIRECTOR
                                     {/* <img src="/assets/images/logo_3.jpg" alt="img" style={{ marginLeft: "auto" }} /> */}
                                     <div className="mt-0 space-y-1 text-right text-sm text-white-dark">
                                         <b>Phone</b> : <a href="tel:9840014193"> 9840014193 </a>|<br />
@@ -282,12 +283,12 @@ const Preview = () => {
                     </div>
                 </div>
 
-                <div className="container" style={{fontSize:"14px"}}>
+                <div className="container" style={{ fontSize: '14px' }}>
                     {' '}
                     <div style={{ textAlign: 'center', paddingTop: '10px' }}>
                         <b>Declaration:-</b> We declare that this invoice shows the actual price of the Test Services described and that all particulars are true and correct. <br /> <br />
                     </div>
-                    <div style={{ textAlign: 'center', fontSize:"12px" }}>
+                    <div style={{ textAlign: 'center', fontSize: '12px' }}>
                         SUBJECT TO COIMBATORE JURISDICTION
                         <br /> This is computer Generated Invoice.
                     </div>

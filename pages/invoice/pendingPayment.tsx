@@ -145,7 +145,6 @@ const PendingPayment = () => {
 
     const initialData = () => {
         const Token = localStorage.getItem('token');
-        console.log('✌️Token --->', Token);
 
         const body = {
             project_name: '',
@@ -155,7 +154,6 @@ const PendingPayment = () => {
             invoice_no: '',
         };
 
-        console.log('✌️body --->', body);
 
         axios
             .post('http://files.covaiciviltechlab.com/pending_payment/', body, {
@@ -164,7 +162,6 @@ const PendingPayment = () => {
                 },
             })
             .then((res: any) => {
-                console.log('✌️res --->', res);
                 setDataSource(res?.data?.pending_payments);
             })
             .catch((error: any) => {
@@ -174,11 +171,9 @@ const PendingPayment = () => {
             });
     };
 
-    console.log('datasource', dataSource);
 
     // form submit
     const onFinish2 = (values: any) => {
-        console.log('✌️values --->', values);
         const Token = localStorage.getItem('token');
 
         const body = {
@@ -189,8 +184,6 @@ const PendingPayment = () => {
             invoice_no: values.invoice_no ? values.invoice_no : '',
         };
 
-        console.log('✌️body --->', body);
-
         axios
             .post('http://files.covaiciviltechlab.com/pending_payment/', body, {
                 headers: {
@@ -198,7 +191,6 @@ const PendingPayment = () => {
                 },
             })
             .then((res: any) => {
-                console.log('✌️res --->', res);
                 setDataSource(res?.data?.pending_payments);
             })
             .catch((error: any) => {
@@ -222,7 +214,7 @@ const PendingPayment = () => {
                             </Form.Item>
 
                             <Form.Item label="Customer" name="customer" style={{ width: '250px' }}>
-                                <Select>
+                                <Select showSearch filterOption={(input: any, option: any) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
                                     {formFields?.customer?.map((value: any) => (
                                         <Select.Option key={value.id} value={value.id}>
                                             {value.customer_name}

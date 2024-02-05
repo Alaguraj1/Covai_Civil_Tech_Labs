@@ -47,7 +47,7 @@ const Test = () => {
             .catch((error) => {
                 if (error.response.status === 401) {
                     router.push('/');
-                } 
+                }
             });
     }, []);
 
@@ -67,7 +67,7 @@ const Test = () => {
             .catch((error: any) => {
                 if (error.response.status === 401) {
                     router.push('/');
-                } 
+                }
             });
     };
 
@@ -232,7 +232,7 @@ const Test = () => {
                 .catch((error: any) => {
                     if (error.response.status === 401) {
                         router.push('/');
-                    } 
+                    }
                 });
         } else {
             axios
@@ -249,13 +249,12 @@ const Test = () => {
                 .catch((error: any) => {
                     if (error.response.status === 401) {
                         router.push('/');
-                    } 
+                    }
                 });
         }
     };
 
-    const onFinishFailed = (errorInfo: any) => {
-    };
+    const onFinishFailed = (errorInfo: any) => {};
 
     // modal data
     const modalData = () => {
@@ -337,7 +336,7 @@ const Test = () => {
                 <Drawer title={drawertitle} placement="right" width={600} onClose={onClose} open={open}>
                     <Form name="basic" layout="vertical" form={form} initialValues={{ remember: true }} onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off">
                         <Form.Item label="Material Name" name="material_name" required={true} rules={[{ required: true, message: 'Please Select your Material Name!' }]}>
-                            <Select>
+                            <Select showSearch filterOption={(input: any, option: any) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
                                 {formFields?.materials?.map((val: any) => (
                                     <Select.Option key={val.id} value={val.material_id}>
                                         {val.material_name}

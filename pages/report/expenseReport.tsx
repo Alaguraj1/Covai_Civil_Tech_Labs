@@ -32,7 +32,7 @@ const ExpenseReport = () => {
             .catch((error: any) => {
                 if (error.response.status === 401) {
                     router.push('/');
-                } 
+                }
             });
     };
 
@@ -117,7 +117,7 @@ const ExpenseReport = () => {
             .catch((error: any) => {
                 if (error.response.status === 401) {
                     router.push('/');
-                } 
+                }
             });
     }, []);
 
@@ -144,13 +144,12 @@ const ExpenseReport = () => {
             .catch((error: any) => {
                 if (error.response.status === 401) {
                     router.push('/');
-                } 
+                }
             });
         form.resetFields();
     };
 
-    const onFinishFailed = (errorInfo: any) => {
-    };
+    const onFinishFailed = (errorInfo: any) => {};
 
     const scrollConfig: any = {
         x: true,
@@ -176,7 +175,7 @@ const ExpenseReport = () => {
                             </Form.Item>
 
                             <Form.Item label="Expense Category" name="expense_category" style={{ width: '300px' }}>
-                                <Select>
+                                <Select showSearch filterOption={(input:any, option:any) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
                                     {saleFormData?.map((value: any) => (
                                         <Select.Option key={value.id} value={value.id}>
                                             {value.expense_name}

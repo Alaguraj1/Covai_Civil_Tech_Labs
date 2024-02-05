@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { setPageTitle } from '../../store/themeConfigSlice';
 import IconSave from '@/components/Icon/IconSave';
 import IconEye from '@/components/Icon/IconEye';
-import { Button, Modal, Form, Input, Select, Space, Drawer, message } from 'antd';
+import { Button, Modal, Form, Input, Select, Space, Drawer, message, Popconfirm } from 'antd';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { DeleteOutlined, EditOutlined, PrinterOutlined } from '@ant-design/icons';
@@ -299,7 +299,7 @@ const Edit = () => {
             .catch((error: any) => {
                 if (error?.response?.status === 401) {
                     router.push('/');
-                } 
+                }
             });
     };
 
@@ -415,7 +415,7 @@ const Edit = () => {
             .catch((error: any) => {
                 if (error?.response?.status === 401) {
                     router.push('/');
-                } 
+                }
             });
     }, []);
 
@@ -439,11 +439,8 @@ const Edit = () => {
 
     const handleCancel = () => {
         setIsModalOpen(false);
-        form.resetFields();
+        form1.resetFields();
     };
-
-   
-   
 
     const quantityChange = (e: any, index: number) => {
         const updatedFilterTest: any = [...filterTest];
@@ -483,49 +480,80 @@ const Edit = () => {
 
         setTestFormData;
     };
+
+
+    const confirm = (e:any) => {
+        console.log(e);
+        message.success('Click on Yes');
+      };
+      const cancel = (e:any) => {
+        console.log(e);
+        message.error('Click on No');
+      };
+
+
     const inputUpdate = (e: any) => {
         if (e.target.value == 'Yes') {
-            const date = formData.date;
+            // const date = formData.date;
 
-            if (date == null) {
-                messageApi.open({
-                    type: 'error',
-                    content: ' Enter Invoice Date Field',
-                });
 
-                setFormData({
-                    ...formData,
-                    [e.target.name]: 'No',
-                });
-                return false;
-            }
-            const BalanceCheck = parseInt(balance, 10);
-            if (BalanceCheck > 0) {
-                messageApi.open({
-                    type: 'error',
-                    content: 'Not Fully Paid',
-                });
+            Modal.confirm({
+                title: 'Alert',
+                content: 'Are you sure you want to create a new invoice?',
+                onOk() {
+                    // Change the value to 'Yes'
+                    setFormData({
+                        ...formData,
+                        [e.target.name]: 'Yes',
+                    })
+                },
+                onCancel() {
+                    // Change the value to 'No'
+                    setFormData({
+                        ...formData,
+                        [e.target.name]: 'No',
+                    })
+                },
+            });
+            // if (date == null) {
+            //     messageApi.open({
+            //         type: 'error',
+            //         content: ' Enter Invoice Date Field',
+            //     });
 
-                setFormData({
-                    ...formData,
-                    [e.target.name]: 'No',
-                });
-                return false;
-            }
+            //     setFormData({
+            //         ...formData,
+            //         [e.target.name]: 'No',
+            //     });
+            //     return false;
+            // }
+            // const BalanceCheck = parseInt(balance, 10);
+            // if (BalanceCheck > 0) {
+            //     messageApi.open({
+            //         type: 'error',
+            //         content: 'Not Fully Paid',
+            //     });
 
-            if (invoiceFormData?.invoice_tests?.some((obj: any) => Object.values(obj).includes('No'))) {
-                messageApi.open({
-                    type: 'error',
-                    content: 'Test Not Completed',
-                });
+            //     setFormData({
+            //         ...formData,
+            //         [e.target.name]: 'No',
+            //     });
+            //     return false;
+            // }
 
-                setFormData({
-                    ...formData,
-                    [e.target.name]: 'No',
-                });
+            // if (invoiceFormData?.invoice_tests?.some((obj: any) => Object.values(obj).includes('No'))) {
+            //     messageApi.open({
+            //         type: 'error',
+            //         content: 'Test Not Completed',
+            //     });
 
-                return false;
-            }
+            //     setFormData({
+            //         ...formData,
+            //         [e.target.name]: 'No',
+            //     });
+
+            //     return false;
+            // }
 
             setFormData({
                 ...formData,
@@ -605,8 +633,6 @@ const Edit = () => {
         });
     };
 
- 
-
     // drawer
     const showDrawer = (item: any) => {
         setEditRecord(item);
@@ -620,63 +646,61 @@ const Edit = () => {
         setCustomerAddress('');
     };
 
+    // Multiple Select
+    const TestChange = (testIds: string[]) => {
+        const filteredTests = filterMaterial.filter((value: any) => {
+            return testIds.includes(value.value);
+        });
+        const addedPrice: any = filteredTests.map((obj: any) => ({ ...obj, quantity: 1, total: Number(obj?.price) }));
 
- // Multiple Select
- const TestChange = (testIds: string[]) => {
-    const filteredTests = filterMaterial.filter((value: any) => {
-        return testIds.includes(value.value);
-    });
-    const addedPrice: any = filteredTests.map((obj: any) => ({ ...obj, quantity: 1, total: Number(obj?.price) }));
-
-    setFilterTest(addedPrice);
-};
-
-const materialChange = (materialId: any) => {
-    const filteredMaterial =
-        testFormData?.tests
-            ?.filter((test: any) => test.test_material_id === String(materialId))
-            .map((test: any) => ({
-                label: test.test_name,
-                value: test.id,
-                price: test.price_per_piece,
-            })) ?? [];
-    setFilterMaterial(filteredMaterial);
-};
-
-const onFinish = (values: any) => {
-    values.invoice = Number(id);
-    const body: any = {
-        ...values,
-        tests: filterTest.map((item: any) => ({
-            ...values,
-            test: item?.value,
-            quantity: item.quantity,
-            price_per_sample: Number(item.price),
-            total: Number(item.total.toFixed(2)),
-        })),
+        setFilterTest(addedPrice);
     };
 
-    axios
-        .post('http://files.covaiciviltechlab.com/create_invoice_test/', body?.tests, {
-            headers: {
-                Authorization: `Token ${localStorage.getItem('token')}`,
-            },
-        })
-        .then((res) => {
-            setIsModalOpen(false);
-            getInvoiceTestData2();
-            form1.resetFields();
-        })
-        .catch((error) => {
-            if (error?.response?.status === 401) {
-                router.push('/');
-            } else {
-            }
-        });
-};
+    const materialChange = (materialId: any) => {
+        const filteredMaterial =
+            testFormData?.tests
+                ?.filter((test: any) => test.test_material_id === String(materialId))
+                .map((test: any) => ({
+                    label: test.test_name,
+                    value: test.id,
+                    price: test.price_per_piece,
+                })) ?? [];
+        setFilterMaterial(filteredMaterial);
+    };
 
-const onFinishFailed = (errorInfo: any) => {
-};
+    const onFinish = (values: any) => {
+        values.invoice = Number(id);
+        const body: any = {
+            ...values,
+            tests: filterTest.map((item: any) => ({
+                ...values,
+                test: item?.value,
+                quantity: item.quantity,
+                price_per_sample: Number(item.price),
+                total: Number(item.total.toFixed(2)),
+            })),
+        };
+
+        axios
+            .post('http://files.covaiciviltechlab.com/create_invoice_test/', body?.tests, {
+                headers: {
+                    Authorization: `Token ${localStorage.getItem('token')}`,
+                },
+            })
+            .then((res) => {
+                setIsModalOpen(false);
+                getInvoiceTestData2();
+                form1.resetFields();
+            })
+            .catch((error) => {
+                if (error?.response?.status === 401) {
+                    router.push('/');
+                } else {
+                }
+            });
+    };
+
+    const onFinishFailed = (errorInfo: any) => {};
 
     // Invoice Test Delete
     const handleDelete = (id: any) => {
@@ -699,7 +723,7 @@ const onFinishFailed = (errorInfo: any) => {
                     .catch((error) => {
                         if (error?.response?.status === 401) {
                             router.push('/');
-                        } 
+                        }
                     });
             },
         });
@@ -722,13 +746,12 @@ const onFinishFailed = (errorInfo: any) => {
             .catch((error: any) => {
                 if (error?.response?.status === 401) {
                     router.push('/');
-                } 
+                }
             });
         onClose();
     };
 
-    const onFinishFailed2 = (errorInfo: any) => {
-    };
+    const onFinishFailed2 = (errorInfo: any) => {};
 
     const handleQuantityChange = (value: any) => {
         const pricePerSample = form.getFieldValue('price_per_sample') || 0;
@@ -746,37 +769,35 @@ const onFinishFailed = (errorInfo: any) => {
 
     // start Payment
 
- // modal
- const PaymentModal = () => {
-    const BalanceCheck = parseInt(balance, 10);
-    if (BalanceCheck <= 0) {
-        messageApi.open({
-            type: 'error',
-            content: 'Already Paid Fully.',
-        });
-    } else {
-        setPaymentModalOpen(true);
-        setPaymentMode(null);
-        setPaymentFormData({
-            payment_mode: 'cash',
-            date: '',
-            upi: null,
-            cheque_number: null,
-            amount: '',
-        });
-    }
-};
+    // modal
+    const PaymentModal = () => {
+        const BalanceCheck = parseInt(balance, 10);
+        if (BalanceCheck <= 0) {
+            messageApi.open({
+                type: 'error',
+                content: 'Already Paid Fully.',
+            });
+        } else {
+            setPaymentModalOpen(true);
+            setPaymentMode(null);
+            setPaymentFormData({
+                payment_mode: 'cash',
+                date: '',
+                upi: null,
+                cheque_number: null,
+                amount: '',
+            });
+        }
+    };
 
-const paymentOk = () => {
-    setPaymentModalOpen(false);
-};
+    const paymentOk = () => {
+        setPaymentModalOpen(false);
+    };
 
-const paymentCancel = () => {
-    setPaymentModalOpen(false);
-    form.resetFields();
-};
-
-
+    const paymentCancel = () => {
+        setPaymentModalOpen(false);
+        form.resetFields();
+    };
 
     // drawer
     const showPaymentDrawer = (item: any) => {
@@ -1521,17 +1542,17 @@ const paymentCancel = () => {
                                                     <IconEye className="ltr:mr-2 rtl:ml-2 shrink-0" />
                                                     Preview
                                                 </button> */}
-                                            {geteditData?.invoice?.completed == 'Yes' ? (
+                                            {/* {geteditData?.invoice?.completed == 'Yes' ? ( */}
                                                 <button className="btn btn-gray w-full gap-2" onClick={() => handlePreviewClick(id)}>
                                                     <IconEye className="shrink-0 ltr:mr-2 rtl:ml-2" />
                                                     Preview
                                                 </button>
-                                            ) : (
+                                            {/* ) : (
                                                 <button className="btn btn-gray w-full gap-2" disabled>
                                                     <IconEye className="shrink-0 ltr:mr-2 rtl:ml-2" />
                                                     Preview
                                                 </button>
-                                            )}
+                                            )} */}
                                         </div>
                                     </div>
                                 </div>
@@ -1543,7 +1564,7 @@ const paymentCancel = () => {
                     <Modal title="Create Test" open={isModalOpen} width={900} onOk={handleOk} onCancel={handleCancel} footer={false}>
                         <Form name="basic" onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical" form={form1}>
                             <Form.Item label="Material Name" name="material_id" required={false} rules={[{ required: true, message: 'Please select a Material Name!' }]}>
-                                <Select onChange={materialChange}>
+                                <Select onChange={materialChange} showSearch filterOption={(input: any, option: any) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
                                     {testFormData?.materials?.map((value: any) => (
                                         <Select.Option key={value.id} value={value.id}>
                                             {value.material_name}
@@ -1553,7 +1574,16 @@ const paymentCancel = () => {
                             </Form.Item>
 
                             <Form.Item label="Test" name="test" required={false} rules={[{ required: true, message: 'Please select one or more tests!' }]}>
-                                <Select mode="multiple" style={{ width: '100%' }} placeholder="Select one or more tests" onChange={TestChange} optionLabelProp="label" options={filterMaterial} />
+                                <Select
+                                    mode="multiple"
+                                    style={{ width: '100%' }}
+                                    placeholder="Select one or more tests"
+                                    onChange={TestChange}
+                                    optionLabelProp="label"
+                                    options={filterMaterial}
+                                    showSearch
+                                    filterOption={(input: any, option: any) => option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                                />
                             </Form.Item>
 
                             <Form.Item>

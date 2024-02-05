@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Space, Table, Modal, InputNumber } from 'antd';
-import { Button, Drawer } from 'antd';
-import { Form, Input, Select, DatePicker } from 'antd';
+import { Space, Table, Modal, InputNumber, Button, Drawer,Form, Input, Select, DatePicker } from 'antd';
 import { EditOutlined, EyeOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import router from 'next/router';
 
 const ExpenseEntry = () => {
-    const { Search } = Input;
     const [form] = Form.useForm();
 
     const [open, setOpen] = useState(false);
@@ -18,12 +15,6 @@ const ExpenseEntry = () => {
     const [dataSource, setDataSource] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [formFields, setFormFields] = useState<any>([]);
-    const [filterData, setFilterData] = useState(dataSource);
-
-    // get Tax datas
-    useEffect(() => {
-        getExpenceEntry();
-    }, []);
 
     useEffect(() => {
         axios
@@ -51,26 +42,7 @@ const ExpenseEntry = () => {
         }
     }, [editRecord, open]);
 
-    const getExpenceEntry = () => {
-        const Token = localStorage.getItem('token');
 
-        axios
-            .get('http://files.covaiciviltechlab.com/expense_entry_list/', {
-                headers: {
-                    Authorization: `Token ${Token}`,
-                },
-            })
-            .then((res) => {
-                setDataSource(res?.data);
-                setFilterData(res.data);
-            })
-            .catch((error: any) => {
-                if (error.response.status === 401) {
-                    router.push('/');
-                } else {
-                }
-            });
-    };
 
     // Model
     const showModal = (record: any) => {
@@ -89,7 +61,6 @@ const ExpenseEntry = () => {
 
     // drawer
     const showDrawer = (record: any) => {
-
         if (record) {
             const updateData: any = {
                 amount: record.amount,
@@ -144,10 +115,10 @@ const ExpenseEntry = () => {
             dataIndex: 'date',
             key: 'date',
             className: 'singleLineCell',
-            render: (text:any, record:any) => {
-              return dayjs(text).format('DD-MM-YYYY');
-            }
-          },
+            render: (text: any, record: any) => {
+                return dayjs(text).format('DD-MM-YYYY');
+            },
+        },
         {
             title: 'Actions',
             key: 'actions',
@@ -198,21 +169,6 @@ const ExpenseEntry = () => {
     //   });
     // };
 
-    // input search
-    const inputChange = (e: any) => {
-        const SearchValue = e.target.value;
-
-        const filteredData = dataSource.filter((item: any) => {
-            return (
-                item?.narration?.toLowerCase().includes(SearchValue.toLowerCase()) ||
-                item?.expense_category_name?.toLowerCase().includes(SearchValue.toLowerCase()) ||
-                item?.expense_user?.toLowerCase().includes(SearchValue.toLowerCase()) ||
-                item?.amount?.includes(SearchValue)
-            );
-        });
-        setFilterData(filteredData);
-    };
-
     // form submit
     const onFinish = (values: any) => {
         const Token = localStorage.getItem('token');
@@ -235,7 +191,7 @@ const ExpenseEntry = () => {
                     },
                 })
                 .then((res: any) => {
-                    getExpenceEntry();
+                    initialData();
                     setOpen(false);
                 })
                 .catch((error: any) => {
@@ -252,7 +208,7 @@ const ExpenseEntry = () => {
                     },
                 })
                 .then((res: any) => {
-                    getExpenceEntry();
+                    initialData();
                     setOpen(false);
                 })
                 .catch((error: any) => {
@@ -266,8 +222,7 @@ const ExpenseEntry = () => {
         onClose();
     };
 
-    const onFinishFailed = (errorInfo: any) => {
-    };
+    const onFinishFailed = (errorInfo: any) => {};
 
     type FieldType = {
         expense_user?: string;
@@ -344,22 +299,122 @@ const ExpenseEntry = () => {
         y: 300,
     };
 
+    // search
+
+    useEffect(() => {
+        initialData();
+    }, []);
+
+    const initialData = () => {
+        const Token = localStorage.getItem('token');
+
+        const body = {
+            from_date: '',
+            to_date: '',
+            expense_user: '',
+            expense_category: '',
+        };
+
+
+        axios
+            .post('http://files.covaiciviltechlab.com/expense_entry_list/', body, {
+                headers: {
+                    Authorization: `Token ${Token}`,
+                },
+            })
+            .then((res: any) => {
+                setDataSource(res?.data);
+            })
+            .catch((error: any) => {
+                if (error.response.status === 401) {
+                    router.push('/');
+                }
+            });
+    };
+
+
+    // form submit
+    const onFinish2 = (values: any) => {
+        const Token = localStorage.getItem('token');
+
+        const body = {
+            from_date: values?.from_date ? dayjs(values?.from_date).format('YYYY-MM-DD') : '',
+            to_date: values?.to_date ? dayjs(values?.to_date).format('YYYY-MM-DD') : '',
+            expense_user: values.expense_user ? values.expense_user : '',
+            expense_category: values.expense_category ? values.expense_category : '',
+        };
+
+
+        axios
+            .post('http://files.covaiciviltechlab.com/expense_entry_list/', body, {
+                headers: {
+                    Authorization: `Token ${Token}`,
+                },
+            })
+            .then((res: any) => {
+                setDataSource(res?.data);
+            })
+            .catch((error: any) => {
+                if (error?.response?.status === 401) {
+                    router.push('/');
+                }
+            });
+        form.resetFields();
+    };
+
+    const onFinishFailed2 = (errorInfo: any) => {};
+
     return (
         <>
             <div className="panel">
+                <div>
+                    <Form name="basic" layout="vertical" form={form} initialValues={{ remember: true }} onFinish={onFinish2} onFinishFailed={onFinishFailed2} autoComplete="off">
+                        <div className="sale_report_inputs">
+                            <Form.Item label="Expense User" name="expense_user" style={{ width: '250px' }}>
+                                <Input/>
+                            </Form.Item>
+
+                            <Form.Item label="Expense Category" name="expense_category" style={{ width: '300px' }}>
+                                <Select showSearch filterOption={(input: any, option: any) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+                                    {formFields?.expense?.map((value: any) => (
+                                        <Select.Option key={value.id} value={value.id}>
+                                            {value.expense_name}
+                                        </Select.Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
+
+                            <Form.Item label="From Date" name="from_date" style={{ width: '250px' }}>
+                                <DatePicker style={{ width: '100%' }} />
+                            </Form.Item>
+
+                            <Form.Item label="To Date" name="to_date" style={{ width: '250px' }}>
+                                <DatePicker style={{ width: '100%' }} />
+                            </Form.Item>
+
+                            <div style={{ display: 'flex', alignItems: 'end' }}>
+                                <Form.Item>
+                                    <Button type="primary" htmlType="submit" style={{ width: '200px' }}>
+                                        Search
+                                    </Button>
+                                </Form.Item>
+                            </div>
+                        </div>
+                    </Form>
+                </div>
                 <div className="tax-heading-main">
                     <div>
                         <h1 className="text-lg font-semibold dark:text-white-light">Manage Expense Entry</h1>
                     </div>
                     <div>
-                        <Search placeholder="Input search text" onChange={inputChange} enterButton className="search-bar" />
+                        {/* <Search placeholder="Input search text" onChange={inputChange} enterButton className="search-bar" /> */}
                         <button type="button" onClick={() => showDrawer(null)} className="create-button">
                             + Create Expense Entry
                         </button>
                     </div>
                 </div>
                 <div className="table-responsive">
-                    <Table dataSource={filterData} columns={columns} pagination={false} scroll={scrollConfig} />
+                    <Table dataSource={dataSource} columns={columns} pagination={false} scroll={scrollConfig} />
                 </div>
 
                 <Drawer title={drawerTitle} placement="right" width={600} onClose={onClose} open={open}>
@@ -379,7 +434,7 @@ const ExpenseEntry = () => {
                         </Form.Item>
 
                         <Form.Item<FieldType> label="Amount" name="amount" required={true} rules={[{ required: true, message: 'Amount field is required.' }]}>
-                            <InputNumber style={{width:"100%"}} />
+                            <InputNumber style={{ width: '100%' }} />
                         </Form.Item>
 
                         <Form.Item<FieldType> label="Narration" name="narration" required={true} rules={[{ required: true, message: 'Narration field is required' }]}>
@@ -387,7 +442,7 @@ const ExpenseEntry = () => {
                         </Form.Item>
 
                         <Form.Item label="Date" name="date" required={true} rules={[{ required: true, message: 'Please Select your Expense Entry Date!' }]}>
-                            <DatePicker style={{ width: '100%' }}  />
+                            <DatePicker style={{ width: '100%' }} />
                         </Form.Item>
 
                         <Form.Item>
