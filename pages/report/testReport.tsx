@@ -43,7 +43,6 @@ const TestReport = () => {
             dataIndex: 'customer',
             key: 'customer',
             className: 'singleLineCell',
-            
         },
         {
             title: 'Material Name',
@@ -51,13 +50,20 @@ const TestReport = () => {
             key: 'material_name',
             className: 'singleLineCell',
         },
-     
+        {
+            title: 'Invoice Number',
+            dataIndex: 'invoice_no',
+            key: 'invoice_no',
+            className: 'singleLineCell',
+            render: (text: any) => (text === 'None' ? null : text),
+        },
+
         {
             title: 'Completed',
             dataIndex: 'completed',
             key: 'completed',
             className: 'singleLineCell',
-            width:150
+            width: 150,
         },
         {
             title: 'Date',
@@ -65,8 +71,6 @@ const TestReport = () => {
             key: 'created_date',
             className: 'singleLineCell',
         },
-
-       
     ];
 
     useEffect(() => {
@@ -78,7 +82,7 @@ const TestReport = () => {
             from_date: '',
             to_date: '',
             customer: '',
-            material:""
+            material: '',
         };
 
         axios
@@ -99,7 +103,7 @@ const TestReport = () => {
 
     // form submit
     const onFinish = (values: any) => {
-console.log('✌️values --->', values);
+        console.log('✌️values --->', values);
         const Token = localStorage.getItem('token');
 
         const body = {
@@ -108,7 +112,6 @@ console.log('✌️values --->', values);
             to_date: values?.to_date ? dayjs(values?.to_date).format('YYYY-MM-DD') : '',
             customer: values.customer ? values.customer : '',
             material: values.material ? values.material : '',
-
         };
         console.log('✌️body --->', body);
 
@@ -119,7 +122,7 @@ console.log('✌️values --->', values);
                 },
             })
             .then((res: any) => {
-console.log('✌️res --->', res);
+                console.log('✌️res --->', res);
                 setDataSource(res?.data?.reports);
             })
             .catch((error: any) => {
