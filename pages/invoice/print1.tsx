@@ -59,6 +59,8 @@ const Print1 = () => {
                 // Check if the current table is not the last one
                 if (tableElement !== lastTable) {
                     tableElement.style.border = '1px solid black';
+                    tableElement.style.padding = "5px 10px";
+                    tableElement.style.fontSize = '14px';
                 } else {
                     //If it's the last table, set border to red
                     tableElement.style.border = 'none !important';
@@ -88,6 +90,11 @@ const Print1 = () => {
             let headingElements = tempDiv.querySelectorAll('h1, h2, h3, h4');
             headingElements.forEach((headingElement: any) => {
                 headingElement.style.textAlign = 'center'; // Set the width to 100%
+                // headingElement.style.marginBottom = "20px";
+            });
+            let paraElements = tempDiv.querySelectorAll('p');
+            paraElements.forEach((headingElement: any) => {
+                headingElement.style.fontSize = '14px'; // Set the width to 100%
                 // headingElement.style.marginBottom = "20px";
             });
 
