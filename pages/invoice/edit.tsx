@@ -52,6 +52,7 @@ const Edit = () => {
         amount: '',
     });
     const [pendingBalance, setPendingBalance] = useState(0);
+    const [formSubmitted, setFormSubmitted] = useState(false);
 
     const [formData, setFormData] = useState<any>({
         customer: '',
@@ -481,21 +482,18 @@ const Edit = () => {
         setTestFormData;
     };
 
-
-    const confirm = (e:any) => {
+    const confirm = (e: any) => {
         console.log(e);
         message.success('Click on Yes');
-      };
-      const cancel = (e:any) => {
+    };
+    const cancel = (e: any) => {
         console.log(e);
         message.error('Click on No');
-      };
-
+    };
 
     const inputUpdate = (e: any) => {
         if (e.target.value == 'Yes') {
             // const date = formData.date;
-
 
             Modal.confirm({
                 title: 'Alert',
@@ -505,14 +503,14 @@ const Edit = () => {
                     setFormData({
                         ...formData,
                         [e.target.name]: 'Yes',
-                    })
+                    });
                 },
                 onCancel() {
                     // Change the value to 'No'
                     setFormData({
                         ...formData,
                         [e.target.name]: 'No',
-                    })
+                    });
                 },
             });
             // if (date == null) {
@@ -617,7 +615,6 @@ const Edit = () => {
                 }
             });
     };
-
 
     // checking
     const invoiceFormSubmit1 = () => {
@@ -730,7 +727,7 @@ const Edit = () => {
                 total: Number(item.total.toFixed(2)),
             })),
         };
-        invoiceFormSubmit1()
+        invoiceFormSubmit1();
         axios
             .post('http://files.covaiciviltechlab.com/create_invoice_test/', body?.tests, {
                 headers: {
@@ -761,7 +758,7 @@ const Edit = () => {
             okText: 'Yes',
             okType: 'danger',
             onOk: () => {
-                invoiceFormSubmit1()
+                invoiceFormSubmit1();
                 axios
                     .delete(`http://files.covaiciviltechlab.com/delete_invoice_test/${id}`, {
                         headers: {
@@ -783,7 +780,7 @@ const Edit = () => {
     // invoice test edit form onfinish
     const onFinish2 = (values: any) => {
         const Token = localStorage.getItem('token');
-        invoiceFormSubmit1()
+        invoiceFormSubmit1();
         axios
             .put(`http://files.covaiciviltechlab.com/edit_invoice_test/${editRecord.id}/`, values, {
                 headers: {
@@ -848,6 +845,7 @@ const Edit = () => {
     const paymentCancel = () => {
         setPaymentModalOpen(false);
         form.resetFields();
+        setFormSubmitted(false);
     };
 
     // drawer
@@ -901,6 +899,7 @@ const Edit = () => {
             return;
         } else {
             invoiceFormSubmit(e);
+            setFormSubmitted(true);
             axios
                 .post(`http://files.covaiciviltechlab.com/add_payment/${id}/`, paymentFormData, {
                     headers: {
@@ -961,7 +960,6 @@ const Edit = () => {
                 },
             })
             .then((res: any) => {
-
                 const totalAmount = res.data.payments.reduce((accumulator: any, current: any) => {
                     const amountValue = parseFloat(current.amount);
 
@@ -988,14 +986,12 @@ const Edit = () => {
     const PaymentDelete = (id: any) => {
         const Token = localStorage.getItem('token');
 
-        invoiceFormSubmit1()
+        invoiceFormSubmit1();
         Modal.confirm({
             title: 'Are you sure to delete the TEST record?',
             okText: 'Yes',
             okType: 'danger',
             onOk: () => {
-                
-
                 axios
                     .delete(`http://files.covaiciviltechlab.com/delete_payment/${id}`, {
                         headers: {
@@ -1004,7 +1000,6 @@ const Edit = () => {
                     })
                     .then((res) => {
                         getInvoiceTestData2();
-
                     })
                     .catch((error) => {
                         if (error?.response?.status === 401) {
@@ -1026,6 +1021,9 @@ const Edit = () => {
         setPendingBalance(oldBalance);
     };
 
+    const handleAmountInput = (e: any) => {
+        e.currentTarget.value = e.currentTarget.value.replace(/\D/g, ''); // Remove non-numeric characters
+    };
     // end Payment
 
     // Print
@@ -1601,10 +1599,10 @@ const Edit = () => {
                                                     Preview
                                                 </button> */}
                                             {/* {geteditData?.invoice?.completed == 'Yes' ? ( */}
-                                                <button className="btn btn-gray w-full gap-2" onClick={() => handlePreviewClick(id)}>
-                                                    <IconEye className="shrink-0 ltr:mr-2 rtl:ml-2" />
-                                                    Preview
-                                                </button>
+                                            <button className="btn btn-gray w-full gap-2" onClick={() => handlePreviewClick(id)}>
+                                                <IconEye className="shrink-0 ltr:mr-2 rtl:ml-2" />
+                                                Preview
+                                            </button>
                                             {/* ) : (
                                                 <button className="btn btn-gray w-full gap-2" disabled>
                                                     <IconEye className="shrink-0 ltr:mr-2 rtl:ml-2" />
@@ -1765,7 +1763,7 @@ const Edit = () => {
                             <div style={{ marginBottom: '10px' }}>
                                 <label>Amount Paid Date</label>
                                 <input type="date" required className="form-input flex-1" name="date" value={paymentFormData?.date} onChange={paymentInputChange} />
-                                {paymentFormData?.date === '' && <p style={{ color: 'red' }}>Amount Paid Date is required</p>}
+                                {formSubmitted && paymentFormData?.date === '' && <p style={{ color: 'red' }}>Amount Paid Date is required</p>}
                             </div>
 
                             <div style={{ marginBottom: '10px' }}>
@@ -1819,11 +1817,9 @@ const Edit = () => {
                                     required
                                     onChange={paymentInputChange}
                                     pattern="[0-9]*"
-                                    onInput={(e) => {
-                                        e.currentTarget.value = e.currentTarget.value.replace(/\D/g, ''); // Remove non-numeric characters
-                                    }}
+                                    onInput={handleAmountInput}
                                 />
-                                {paymentFormData?.amount === '' && <p style={{ color: 'red' }}>Amount is required</p>}
+                                {formSubmitted && paymentFormData?.amount === '' && <p style={{ color: 'red' }}>Amount is required</p>}
                             </div>
                             <div style={{ paddingTop: '30px' }}>
                                 <Button type="primary" htmlType="submit" onClick={paymentSubmit}>
