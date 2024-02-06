@@ -51,7 +51,7 @@ const TestReport = () => {
             className: 'singleLineCell',
         },
         {
-            title: 'Invoice Number',
+            title: 'Invoice No',
             dataIndex: 'invoice_no',
             key: 'invoice_no',
             className: 'singleLineCell',
