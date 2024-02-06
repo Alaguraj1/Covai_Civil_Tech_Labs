@@ -248,7 +248,7 @@ const InvoiceFileReport = () => {
                                 Export to Excel
                             </Button>
                             <Button type="primary" onClick={handleDownloadAll}>
-                                Download
+                                Download PDF
                             </Button>
                             {/* <Search placeholder="input search text" onChange={inputChange} enterButton className='search-bar' /> */}
                         </Space>
