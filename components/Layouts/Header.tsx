@@ -434,6 +434,9 @@ const Header = () => {
                                 <li>
                                     <Link href="/report/invoiceFileReport">{t('Invoice File Report')}</Link>
                                 </li>
+                                <li>
+                                    <Link href="/report/testReport">{t('Test Report')}</Link>
+                                </li>
                                
                             </ul>
                         </li>

@@ -10,31 +10,7 @@ import router from 'next/router';
 const ExpenseFileReport = () => {
     const [form] = Form.useForm();
     const [dataSource, setDataSource] = useState([]);
-    const [saleFormData, setSaleFormData] = useState([]);
 
-    // get GetExpenseReport datas
-    useEffect(() => {
-        GetExpenseReport();
-    }, []);
-
-    const GetExpenseReport = () => {
-        const Token = localStorage.getItem('token');
-
-        axios
-            .get('http://files.covaiciviltechlab.com/expense_report/', {
-                headers: {
-                    Authorization: `Token ${Token}`,
-                },
-            })
-            .then((res) => {
-                setSaleFormData(res.data?.expense_category);
-            })
-            .catch((error: any) => {
-                if (error.response.status === 401) {
-                    router.push('/');
-                }
-            });
-    };
 
     // Table Headers
     const columns = [
@@ -49,7 +25,6 @@ const ExpenseFileReport = () => {
             dataIndex: 'expense_amount',
             key: 'expense_amount',
             className: 'singleLineCell',
-            width: 150,
         },
         {
             title: 'File',
@@ -89,7 +64,7 @@ const ExpenseFileReport = () => {
             new Blob([blob], {
                 type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             }),
-            'Expense-Report.xlsx'
+            'Expense-File-Report.xlsx'
         );
     };
 

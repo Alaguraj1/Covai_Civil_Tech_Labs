@@ -270,6 +270,13 @@ const Sidebar = () => {
                                             </div>
                                         </Link>
                                     </li>
+                                    <li className="menu nav-item">
+                                        <Link href="/report/testReport" className="group">
+                                            <div className="flex items-center">
+                                                <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('Test Report')}</span>
+                                            </div>
+                                        </Link>
+                                    </li>
                                 </>
                             ) : (
                                 <></>

@@ -97,7 +97,7 @@ const InvoiceFileReport = () => {
             new Blob([blob], {
                 type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             }),
-            'Expense-Report.xlsx'
+            'Invoice-File-Report.xlsx'
         );
     };
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Space, Table, Modal } from 'antd';
 import { Button, Drawer, InputNumber } from 'antd';
 import { Form, Input, Radio } from 'antd';
-import { EditOutlined, EyeOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import router from 'next/router';
 
@@ -119,7 +119,7 @@ const Tax = () => {
                     {/* <EditOutlined
             style={{ cursor: "pointer" }}
             onClick={() => showDrawer(record)}
-            className='edit-icon' rev={undefined} />
+            className='edit-icon' rev={undefined} /> */}
 
 
           {
@@ -138,35 +138,35 @@ const Tax = () => {
                 rev={undefined}
               />
             )
-          } */}
+          }
                 </Space>
             ),
         },
     ];
 
-    // const handleDelete = (record: any,) => {
+    const handleDelete = (record: any,) => {
 
-    //   const Token = localStorage.getItem("token")
+      const Token = localStorage.getItem("token")
 
-    //   Modal.confirm({
-    //     title: "Are you sure, you want to delete this TAX record?",
-    //     okText: "Yes",
-    //     okType: "danger",
-    //     onOk: () => {
-    //       axios.delete(`http://files.covaiciviltechlab.com/delete_tax/${record.id}`, {
-    //         headers: {
-    //           "Authorization": `Token ${Token}`
-    //         }
-    //       }).then((res) => {
-    //         console.log(res)
-    //         GetTaxData()
-    //       }).catch((err) => {
-    //         console.log(err)
-    //       })
+      Modal.confirm({
+        title: "Are you sure, you want to delete this TAX record?",
+        okText: "Yes",
+        okType: "danger",
+        onOk: () => {
+          axios.delete(`http://files.covaiciviltechlab.com/delete_tax/${record.id}`, {
+            headers: {
+              "Authorization": `Token ${Token}`
+            }
+          }).then((res) => {
+            console.log(res)
+            GetTaxData()
+          }).catch((err) => {
+            console.log(err)
+          })
 
-    //     },
-    //   });
-    // };
+        },
+      });
+    };
 
     // Search Bar
     const inputChange = (e: any) => {
