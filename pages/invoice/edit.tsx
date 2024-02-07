@@ -493,65 +493,47 @@ const Edit = () => {
 
     const inputUpdate = (e: any) => {
         if (e.target.value == 'Yes') {
-            // const date = formData.date;
+            const date = formData.date;
 
-            Modal.confirm({
-                title: 'Alert',
-                content: 'Are you sure you want to create a new invoice?',
-                onOk() {
-                    // Change the value to 'Yes'
-                    setFormData({
-                        ...formData,
-                        [e.target.name]: 'Yes',
-                    });
-                },
-                onCancel() {
-                    // Change the value to 'No'
-                    setFormData({
-                        ...formData,
-                        [e.target.name]: 'No',
-                    });
-                },
-            });
-            // if (date == null) {
-            //     messageApi.open({
-            //         type: 'error',
-            //         content: ' Enter Invoice Date Field',
-            //     });
+            if (date == null) {
+                messageApi.open({
+                    type: 'error',
+                    content: ' Enter Invoice Date Field',
+                });
 
-            //     setFormData({
-            //         ...formData,
-            //         [e.target.name]: 'No',
-            //     });
-            //     return false;
-            // }
-            // const BalanceCheck = parseInt(balance, 10);
-            // if (BalanceCheck > 0) {
-            //     messageApi.open({
-            //         type: 'error',
-            //         content: 'Not Fully Paid',
-            //     });
+                setFormData({
+                    ...formData,
+                    [e.target.name]: 'No',
+                });
+                return false;
+            }
+            const BalanceCheck = parseInt(balance, 10);
+            if (BalanceCheck > 0) {
+                messageApi.open({
+                    type: 'error',
+                    content: 'Not Fully Paid',
+                });
 
-            //     setFormData({
-            //         ...formData,
-            //         [e.target.name]: 'No',
-            //     });
-            //     return false;
-            // }
+                setFormData({
+                    ...formData,
+                    [e.target.name]: 'No',
+                });
+                return false;
+            }
 
-            // if (invoiceFormData?.invoice_tests?.some((obj: any) => Object.values(obj).includes('No'))) {
-            //     messageApi.open({
-            //         type: 'error',
-            //         content: 'Test Not Completed',
-            //     });
+            if (invoiceFormData?.invoice_tests?.some((obj: any) => Object.values(obj).includes('No'))) {
+                messageApi.open({
+                    type: 'error',
+                    content: 'Test Not Completed',
+                });
 
-            //     setFormData({
-            //         ...formData,
-            //         [e.target.name]: 'No',
-            //     });
+                setFormData({
+                    ...formData,
+                    [e.target.name]: 'No',
+                });
 
-            //     return false;
-            // }
+                return false;
+            }
 
             setFormData({
                 ...formData,

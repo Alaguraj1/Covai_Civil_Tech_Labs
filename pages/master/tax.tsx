@@ -122,7 +122,7 @@ const Tax = () => {
             className='edit-icon' rev={undefined} /> */}
 
 
-          {
+          {/* {
             localStorage.getItem('admin') === 'true' ? (
               <DeleteOutlined
                 style={{ color: "red", cursor: "pointer" }}
@@ -138,35 +138,35 @@ const Tax = () => {
                 rev={undefined}
               />
             )
-          }
+          } */}
                 </Space>
             ),
         },
     ];
 
-    const handleDelete = (record: any,) => {
+    // const handleDelete = (record: any,) => {
 
-      const Token = localStorage.getItem("token")
+    //   const Token = localStorage.getItem("token")
 
-      Modal.confirm({
-        title: "Are you sure, you want to delete this TAX record?",
-        okText: "Yes",
-        okType: "danger",
-        onOk: () => {
-          axios.delete(`http://files.covaiciviltechlab.com/delete_tax/${record.id}`, {
-            headers: {
-              "Authorization": `Token ${Token}`
-            }
-          }).then((res) => {
-            console.log(res)
-            GetTaxData()
-          }).catch((err) => {
-            console.log(err)
-          })
+    //   Modal.confirm({
+    //     title: "Are you sure, you want to delete this TAX record?",
+    //     okText: "Yes",
+    //     okType: "danger",
+    //     onOk: () => {
+    //       axios.delete(`http://files.covaiciviltechlab.com/delete_tax/${record.id}`, {
+    //         headers: {
+    //           "Authorization": `Token ${Token}`
+    //         }
+    //       }).then((res) => {
+    //         console.log(res)
+    //         GetTaxData()
+    //       }).catch((err) => {
+    //         console.log(err)
+    //       })
 
-        },
-      });
-    };
+    //     },
+    //   });
+    // };
 
     // Search Bar
     const inputChange = (e: any) => {
