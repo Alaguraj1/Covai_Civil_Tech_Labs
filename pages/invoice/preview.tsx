@@ -77,6 +77,8 @@ const Preview = () => {
     // after tax
     const After_Tax: any = BeforeTotal + Tax_total;
 
+console.log("printData", printData?.invoice)
+
     return (
         <>
             <div>
@@ -249,7 +251,7 @@ const Preview = () => {
                         <hr className="my-2 border-white-light dark:border-[#1b2e4b]" />
                         <div className="preview-footer-main">
                             <div className="preview-qr-outer">
-                                <img src="/assets/images/Sponsor.jpg" style={{ textAlign: 'center', width: '120px', height: '100px' }} alt="image" />
+                                <img src="/assets/images/Sponsor.jpg" style={{ textAlign: 'center', width: '75%', height: '50%' }} alt="image" />
                             </div>
 
                             {printData?.invoice?.invoice_no === null ? (
@@ -262,11 +264,12 @@ const Preview = () => {
                                 </>
                             )}
 
+
                             <div className="preview-qr-outer">
                                 <div className="mt-0 grid-cols-9 space-y-1 text-right text-right text-sm text-white-dark">
                                     <img src="/assets/images/sign.png" alt="img" style={{ marginLeft: 'auto' }} />
                                     <br />
-                                    COVAI CIVIL TECH LAB <br /> R.TIRUMALAI <br /> TECHNICAL DIRECTOR
+                                    COVAI CIVIL TECH LAB <br /> R.TIRUMALAI (TECHNICAL DIRECTOR)
                                     {/* <img src="/assets/images/logo_3.jpg" alt="img" style={{ marginLeft: "auto" }} /> */}
                                     <div className="mt-0 space-y-1 text-right text-sm text-white-dark">
                                         <b>Phone</b> : <a href="tel:9840014193"> 9840014193 </a>|<br />
@@ -276,7 +279,7 @@ const Preview = () => {
                                                 cbe@covaiciviltechlab.com{' '}
                                             </a>
                                         </i>{' '}
-                                        |<br />
+                                        
                                         <i>
                                             <b>Website :</b>{' '}
                                             <a href="https://covaiciviltechlab.com/" target="blank">

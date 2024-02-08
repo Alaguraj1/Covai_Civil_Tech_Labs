@@ -812,7 +812,7 @@ border-right: 1px solid black;
 
 .preview-qr-outer{
     display: flex;
-    justify-content: center;
+    justify-content: start;
 }
 
 table tbody tr {
