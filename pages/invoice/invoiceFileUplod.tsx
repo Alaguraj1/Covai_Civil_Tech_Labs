@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Space, Table, Modal, DatePicker } from 'antd';
 import { Button, Drawer } from 'antd';
 import { Form, Input, message, Upload, Select } from 'antd';
@@ -11,6 +11,7 @@ import dayjs from 'dayjs';
 const InvoiceFileUpload = () => {
     const { Search } = Input;
     const [form] = Form.useForm();
+    const fileInputRef = useRef(null);
 
     const [open, setOpen] = useState(false);
     const [editRecord, setEditRecord] = useState<any>(null);
@@ -20,7 +21,7 @@ const InvoiceFileUpload = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [formFields, setFormFields] = useState<any>([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
-    const [fileshow, setFileShow] = useState('');
+    const [fileshow, setFileShow] = useState<any>('');
     const [errorMessage, setErrorMessage] = useState('');
     const [fileInputData, setFileInputData] = useState<any>({
         file: null,
@@ -104,7 +105,11 @@ const InvoiceFileUpload = () => {
     // drawer
     const showDrawer = (record: any) => {
         console.log('✌️record --->', record);
-        console.log('fileInputData.file', fileInputData.file);
+        console.log('fileInputData.file', fileInputData?.file);
+
+        if (record && record.id !== editRecord?.id) {
+            removeFile();
+        }
 
         if (record) {
             setFileShow(record.file_url);
@@ -115,12 +120,14 @@ const InvoiceFileUpload = () => {
                 category: record.category,
                 expense: record.expense,
             });
-            setFileInputData({ ...fileInputData, file: fileInputData.file?.name });
+            setFileInputData({ ...fileInputData, file: fileInputData?.file?.name });
         } else {
             setEditRecord(null);
             form.resetFields();
-            setFileShow('');
-            setErrorMessage('')
+            setFileShow(null);
+            setErrorMessage('');
+            setFileInputData(null);
+            removeFile();
         }
         setOpen(true);
     };
@@ -130,7 +137,9 @@ const InvoiceFileUpload = () => {
         setOpen(false);
         form.resetFields();
         setFileShow('');
-        setErrorMessage('')
+        setErrorMessage('');
+        setFileInputData(null);
+        removeFile();
     };
 
     const columns = [
@@ -243,6 +252,7 @@ const InvoiceFileUpload = () => {
                     console.log('✌️res --->', res);
                     initialData();
                     setOpen(false);
+                    onClose();
                 })
                 .catch((error: any) => {
                     if (error.response.status === 401) {
@@ -261,6 +271,7 @@ const InvoiceFileUpload = () => {
                     initialData();
                     setOpen(false);
                     setFileShow('');
+                    onClose();
                 })
                 .catch((error: any) => {
                     if (error.response.status === 401) {
@@ -269,7 +280,6 @@ const InvoiceFileUpload = () => {
                 });
             form.resetFields();
         }
-        onClose();
     };
 
     const onFinishFailed = (errorInfo: any) => {};
@@ -340,6 +350,10 @@ const InvoiceFileUpload = () => {
 
     const removeFile = () => {
         setFileShow('');
+        setFileInputData(null);
+        if (fileInputRef.current) {
+            fileInputRef.current.value = '';
+        }
     };
 
     const selectFileChange = (e: any) => {
@@ -350,10 +364,12 @@ const InvoiceFileUpload = () => {
             if (fileType === 'application/pdf' || fileType.includes('spreadsheet')) {
                 if (fileSize <= 2) {
                     setFileInputData({ file });
+                    setErrorMessage('');
                 } else {
                     // Display error message or handle the invalid file size
                     console.log('File size exceeds the limit of 2 MB.');
                     setErrorMessage('File size exceeds the limit of 2 MB.');
+                    setFileInputData(null);
                 }
             } else {
                 // Display error message or handle the invalid file type
@@ -435,6 +451,8 @@ const InvoiceFileUpload = () => {
     };
 
     const onFinishFailed2 = (errorInfo: any) => {};
+
+    console.log('fileInputData', fileInputData);
 
     return (
         <>
@@ -552,7 +570,7 @@ const InvoiceFileUpload = () => {
                             </>
                         ) : (
                             <>
-                                <input type="file" name="file" accept=".pdf, .xls, .xlsx" onChange={selectFileChange} required />
+                                <input id="file" type="file" ref={fileInputRef} name="file" accept=".pdf, .xls, .xlsx" onChange={selectFileChange} required />
                                 <p style={{ color: 'red' }}>{errorMessage}</p>
                             </>
                         )}
