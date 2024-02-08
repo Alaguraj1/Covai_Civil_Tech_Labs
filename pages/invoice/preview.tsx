@@ -45,17 +45,20 @@ const Preview = () => {
     const Add_Discount = (TestTotal * printData?.invoice?.discount) / 100;
 
     const BeforeTotal = TestTotal - Add_Discount;
+    console.log('✌️BeforeTotal --->', BeforeTotal);
 
     // Taxs
     const taxIds = printData?.invoice?.tax;
 
     const filteredTaxes = printData?.taxes?.filter((tax: any) => taxIds.includes(tax.id));
+    console.log('✌️filteredTaxes --->', filteredTaxes);
 
     const Discount: any = () => {
         if (filteredTaxes?.length > 0) {
             const percentagesArray = filteredTaxes.map((item: any) => `${parseFloat(item.tax_percentage)}%`);
 
             const sum = percentagesArray.reduce((accumulator: any, currentValue: any) => accumulator + currentValue, 0);
+            console.log('✌️sum --->', sum);
 
             const selectedName = filteredTaxes.map((item: any) => item.tax_name);
             const nameString = selectedName.join(' + ');
@@ -67,17 +70,17 @@ const Preview = () => {
     };
 
     // tax total amount
-    if (filteredTaxes?.length > 0) {
-        const percentagesArray = filteredTaxes.map((item: any) => parseFloat(item.tax_percentage));
 
-        var sum = percentagesArray.reduce((accumulator: any, currentValue: any) => accumulator + currentValue, 0);
-    }
+        const percentagesArray = filteredTaxes?.map((item: any) => parseFloat(item?.tax_percentage));
+
+        var sum = percentagesArray?.reduce((accumulator: any, currentValue: any) => accumulator + currentValue, 0);
+    
     const Tax_total = (BeforeTotal * sum) / 100;
 
     // after tax
     const After_Tax: any = BeforeTotal + Tax_total;
 
-console.log("printData", printData?.invoice)
+    console.log('printData', printData?.invoice);
 
     return (
         <>
@@ -264,7 +267,6 @@ console.log("printData", printData?.invoice)
                                 </>
                             )}
 
-
                             <div className="preview-qr-outer">
                                 <div className="mt-0 grid-cols-9 space-y-1 text-right text-right text-sm text-white-dark">
                                     <img src="/assets/images/sign.png" alt="img" style={{ marginLeft: 'auto' }} />
@@ -279,7 +281,7 @@ console.log("printData", printData?.invoice)
                                                 cbe@covaiciviltechlab.com{' '}
                                             </a>
                                         </i>{' '}
-                                        
+                                        <br />
                                         <i>
                                             <b>Website :</b>{' '}
                                             <a href="https://covaiciviltechlab.com/" target="blank">

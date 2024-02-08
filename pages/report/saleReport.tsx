@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Form, Input, Button, DatePicker, Select } from 'antd';
+import { Table, Form, Input, Button, DatePicker, Select, Tooltip } from 'antd';
 import axios from 'axios';
 import ExcelJS from 'exceljs';
 import * as FileSaver from 'file-saver';
@@ -31,81 +31,146 @@ const SaleReport = () => {
     // Table Datas
     const columns = [
         {
-            title: 'Date',
+            title: (
+                <Tooltip title="Date">
+                  <span>Date</span>
+                </Tooltip>
+              ),
             dataIndex: 'export_date',
             key: 'export_date',
             className: 'singleLineCell',
+            
         },
         {
-            title: 'Invoice No',
+            title: (
+                <Tooltip title="Invoice No">
+                  <span>Invoice No</span>
+                </Tooltip>
+              ),
             dataIndex: 'invoice_no',
             key: 'invoice_no',
             className: 'singleLineCell',
             width: 100,
         },
         {
-            title: 'Customer Name',
+            title: (
+                <Tooltip title="Customer Name">
+                  <span>Invoice No</span>
+                </Tooltip>
+              ),
             dataIndex: 'customer_name',
             key: 'customer_name',
             className: 'singleLineCell',
+            
         },
         {
-            title: 'Customer GST No',
+            title: (
+                <Tooltip title="Customer GST No">
+                  <span>Customer GST No</span>
+                </Tooltip>
+              ),
             dataIndex: 'customer_gst_no',
             key: 'customer_gst_no',
             className: 'singleLineCell',
         },
         {
-            title: 'Project Name',
+            title: (
+                <Tooltip title="Project Name">
+                  <span>Project Name</span>
+                </Tooltip>
+              ),
             dataIndex: 'project_name',
             key: 'project_name',
             className: 'singleLineCell',
         },
 
         {
-            title: 'Advance',
+            title: (
+                <Tooltip title="Advance">
+                  <span>Advance</span>
+                </Tooltip>
+              ),
             dataIndex: 'advance',
             key: 'advance',
             className: 'singleLineCell',
+
         },
         {
-            title: 'Balance',
+            title: (
+                <Tooltip title="Balance">
+                  <span>Balance</span>
+                </Tooltip>
+              ),
             dataIndex: 'balance',
             key: 'balance',
             className: 'singleLineCell',
+            width:120
         },
         {
-            title: 'Cheque No',
+            title: (
+                <Tooltip title="Cheque No">
+                  <span>Cheque No</span>
+                </Tooltip>
+              ),
             dataIndex: 'cheque_neft',
             key: 'cheque_neft',
             className: 'singleLineCell',
             width: 120,
         },
         {
-            title: 'UPI',
+            title: (
+                <Tooltip title="UPI">
+                  <span>UPI</span>
+                </Tooltip>
+              ),
             dataIndex: 'upi',
             key: 'upi',
             className: 'singleLineCell',
+            width: 100,
         },
         {
-            title: 'CGST Tax',
+            title: (
+                <Tooltip title="CGST Tax">
+                  <span>CGST Tax</span>
+                </Tooltip>
+              ),
             dataIndex: 'cgst_tax',
             key: 'cgst_tax',
             className: 'singleLineCell',
             width: 100,
         },
         {
-            title: 'SGST Tax',
+            title: (
+                <Tooltip title="SGST Tax">
+                  <span>SGST Tax</span>
+                </Tooltip>
+              ),
             dataIndex: 'sgst_tax',
             key: 'sgst_tax',
             className: 'singleLineCell',
             width: 100,
         },
         {
-            title: 'Total Amount',
+            title: (
+                <Tooltip title="IGST Tax">
+                  <span>IGST Tax</span>
+                </Tooltip>
+              ),
+            dataIndex: 'igst_tax',
+            key: 'igst_tax',
+            className: 'singleLineCell',
+            width: 100,
+        },
+        {
+            title: (
+                <Tooltip title="Total Amount">
+                  <span>Total Amount</span>
+                </Tooltip>
+              ),
             dataIndex: 'total_amount',
             key: 'total_amount',
             className: 'singleLineCell',
+            width: 100,
         },
     ];
 
