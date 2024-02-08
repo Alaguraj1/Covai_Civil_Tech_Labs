@@ -11,7 +11,7 @@ import dayjs from 'dayjs';
 const InvoiceFileUpload = () => {
     const { Search } = Input;
     const [form] = Form.useForm();
-    const fileInputRef = useRef(null);
+    const fileInputRef: any = useRef(null);
 
     const [open, setOpen] = useState(false);
     const [editRecord, setEditRecord] = useState<any>(null);
