@@ -90,7 +90,7 @@ const Print = () => {
             const Token = localStorage.getItem('token');
 
             axios
-                .get(`http://files.covaiciviltechlab.com/edit_invoice_test_template/${id}/`, {
+                .get(`https://files.covaiciviltechlab.com/edit_invoice_test_template/${id}/`, {
                     headers: {
                         Authorization: `Token ${Token}`,
                     },

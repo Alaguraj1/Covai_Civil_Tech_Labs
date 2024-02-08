@@ -13,7 +13,7 @@ const [finalHtml, setFinalHtml] = useState<any>()
         if (id) {
             const Token = localStorage.getItem("token")
 
-            axios.get(`http://files.covaiciviltechlab.com/preview_invoice_test_template/${id}/`, {
+            axios.get(`https://files.covaiciviltechlab.com/preview_invoice_test_template/${id}/`, {
                
             }).then((res) => {
                 setInvoiceReport(res.data);

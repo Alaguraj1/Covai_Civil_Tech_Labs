@@ -25,7 +25,7 @@ const Preview = () => {
 
     useEffect(() => {
         axios
-            .get(`http://files.covaiciviltechlab.com/print_invoice/${id}/`, {
+            .get(`https://files.covaiciviltechlab.com/print_invoice/${id}/`, {
                 headers: {
                     Authorization: `Token ${localStorage.getItem('token')}`,
                 },

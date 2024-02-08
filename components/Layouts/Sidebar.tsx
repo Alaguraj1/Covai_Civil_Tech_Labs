@@ -70,7 +70,7 @@ const Sidebar = () => {
                 if (!Token) {
                 } else {
                     axios
-                        .get('http://files.covaiciviltechlab.com/logout/', {
+                        .get('https://files.covaiciviltechlab.com/logout/', {
                             headers: {
                                 Authorization: `Token ${Token}`,
                             },

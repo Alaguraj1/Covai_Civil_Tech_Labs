@@ -1,53 +1,55 @@
-import {  useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import BlankLayout from '@/components/Layouts/BlankLayout';
 import Link from 'next/link';
 import IconMail from '@/components/Icon/IconMail';
 import IconLockDots from '@/components/Icon/IconLockDots';
-import axios from "axios"
-import { message, } from 'antd';
-
+import axios from 'axios';
+import { message } from 'antd';
 
 const Index = () => {
-
     const router = useRouter();
-    const [formData, setFormData] = useState(
-        {
-            username: "",
-            password: ""
-        }
-    )
+    const [formData, setFormData] = useState({
+        username: '',
+        password: '',
+    });
     const [messageApi, contextHolder] = message.useMessage();
-
+    const [showPassword, setShowPassword] = useState(false);
 
     const submitForm = async (e: any) => {
         e.preventDefault();
 
-        axios.post("http://files.covaiciviltechlab.com/login/", formData).then((res) => {
-            localStorage.setItem("token", res?.data?.token)
-            localStorage.setItem("admin", res?.data?.is_admin)
-            localStorage.setItem("user", res?.data?.name)
-            router.push('/dashboard');
-            messageApi.open({
-                type: 'success',
-                content: 'Login Successfull',
+        axios
+            .post('https://files.covaiciviltechlab.com/login/', formData)
+            .then((res) => {
+                localStorage.setItem('token', res?.data?.token);
+                localStorage.setItem('admin', res?.data?.is_admin);
+                localStorage.setItem('user', res?.data?.name);
+                router.push('/dashboard');
+                messageApi.open({
+                    type: 'success',
+                    content: 'Login Successfull',
+                });
+            })
+            .catch((error: any) => {
+                messageApi.open({
+                    type: 'error',
+                    content: 'The username or password you entered is incorrect.',
+                });
             });
-        }).catch((error: any) => {
-            messageApi.open({
-                type: 'error',
-                content: 'The username or password you entered is incorrect.',
-            });
-        })
-
     };
-    
-    const inputChange = ((e: any) => {
+
+    const inputChange = (e: any) => {
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value
-        }
-        )
-    })
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    
+    const togglePasswordVisibility = () => {
+        setShowPassword((prevShowPassword) => !prevShowPassword);
+    };
 
     return (
         <div>
@@ -72,11 +74,10 @@ const Index = () => {
                         </div>
                     </div>
                     <div className="relative flex w-full flex-col items-center justify-center gap-6 px-4 pb-16 pt-6 sm:px-6 lg:max-w-[667px]">
-                        <div className="flex w-full max-w-[440px] items-center gap-2 lg:absolute lg:end-6 lg:top-6 lg:max-w-full">
-                        </div>
+                        <div className="flex w-full max-w-[440px] items-center gap-2 lg:absolute lg:end-6 lg:top-6 lg:max-w-full"></div>
                         <div className="w-full max-w-[440px] lg:mt-16">
                             <div className="mb-10">
-                                <h1 className="text-3xl font-extrabold uppercase !leading-snug text-brown md:text-4xl">Sign in</h1>
+                                <h1 className="text-brown text-3xl font-extrabold uppercase !leading-snug md:text-4xl">Sign in</h1>
                                 <p className="text-base font-bold leading-normal text-white-dark">Enter your email and password to Sign In</p>
                             </div>
                             {contextHolder}
@@ -84,7 +85,16 @@ const Index = () => {
                                 <div>
                                     <label htmlFor="Email">Email</label>
                                     <div className="relative text-white-dark">
-                                        <input required id="Email" type="email" placeholder="Enter Email" className="form-input ps-10 placeholder:text-white-dark" name='username' value={formData?.username} onChange={inputChange} />
+                                        <input
+                                            required
+                                            id="Email"
+                                            type="email"
+                                            placeholder="Enter Email"
+                                            className="form-input ps-10 placeholder:text-white-dark"
+                                            name="username"
+                                            value={formData?.username}
+                                            onChange={inputChange}
+                                        />
                                         <span className="absolute start-4 top-1/2 -translate-y-1/2">
                                             <IconMail fill={true} />
                                         </span>
@@ -93,11 +103,25 @@ const Index = () => {
                                 <div>
                                     <label htmlFor="Password">Password</label>
                                     <div className="relative text-white-dark">
-                                        <input required id="Password" type="password" placeholder="Enter Password" className="form-input ps-10 placeholder:text-white-dark" name='password' value={formData?.password} onChange={inputChange} />
-                                        <span className="absolute start-4 top-1/2 -translate-y-1/2">
+                                        <input
+                                            required
+                                            id="Password"
+                                            type={showPassword ? 'text' : 'password'}
+                                            placeholder="Enter Password"
+                                            className="form-input ps-10 placeholder:text-white-dark"
+                                            name="password"
+                                            value={formData?.password}
+                                            onChange={inputChange}
+                                        />
+                                        <span className="absolute start-4 top-1/2 -translate-y-1/2" onClick={togglePasswordVisibility} style={{ cursor: 'pointer' }}>
                                             <IconLockDots fill={true} />
                                         </span>
                                     </div>
+                                </div>
+                                <div style={{ display: 'flex', justifyContent: 'end', textDecoration: 'underline' }}>
+                                    <p>
+                                        <Link href="/auth/forgetPassword">Forgot Password ?</Link>
+                                    </p>
                                 </div>
                                 <button type="submit" className="btn btn-gradient !mt-6 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]">
                                     Sign in

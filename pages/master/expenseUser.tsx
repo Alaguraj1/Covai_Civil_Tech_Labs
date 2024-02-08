@@ -22,7 +22,7 @@ const ExpenseUser = () => {
     }, [])
 
     const getExpenseUser = (() => {
-        axios.get("http://files.covaiciviltechlab.com/expense_user_list/", {
+        axios.get("https://files.covaiciviltechlab.com/expense_user_list/", {
             headers: {
                 "Authorization": `Token ${localStorage.getItem("token")}`
             }
@@ -132,7 +132,7 @@ const ExpenseUser = () => {
             okType: "danger",
             onOk: () => {
                 console.log(record, "values")
-                axios.delete(`http://files.covaiciviltechlab.com/delete_expense_user/${record.id}/`, {
+                axios.delete(`https://files.covaiciviltechlab.com/delete_expense_user/${record.id}/`, {
                     headers: {
                         "Authorization": `Token ${Token}`
                     }
@@ -161,7 +161,7 @@ const ExpenseUser = () => {
     const onFinish = (values: any) => {
 
         if (editRecord) {
-            axios.put(`http://files.covaiciviltechlab.com/edit_expense_user/${editRecord.id}/`, values, {
+            axios.put(`https://files.covaiciviltechlab.com/edit_expense_user/${editRecord.id}/`, values, {
                 headers: {
                     "Authorization": `Token ${localStorage.getItem("token")}`
                 }
@@ -173,7 +173,7 @@ const ExpenseUser = () => {
                 console.log(err)
             })
         } else {
-            axios.post(`http://files.covaiciviltechlab.com/create_expense_user/`, values, {
+            axios.post(`https://files.covaiciviltechlab.com/create_expense_user/`, values, {
                 headers: {
                     "Authorization": `Token ${localStorage.getItem("token")}`
                 }

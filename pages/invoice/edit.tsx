@@ -114,7 +114,7 @@ const Edit = () => {
 
     const getInvoiceTestData = () => {
         axios
-            .get(`http://files.covaiciviltechlab.com/edit_invoice/${id}/`, {
+            .get(`https://files.covaiciviltechlab.com/edit_invoice/${id}/`, {
                 headers: {
                     Authorization: `Token ${localStorage.getItem('token')}`,
                 },
@@ -220,7 +220,7 @@ const Edit = () => {
 
     const getInvoiceTestData2 = () => {
         axios
-            .get(`http://files.covaiciviltechlab.com/edit_invoice/${id}/`, {
+            .get(`https://files.covaiciviltechlab.com/edit_invoice/${id}/`, {
                 headers: {
                     Authorization: `Token ${localStorage.getItem('token')}`,
                 },
@@ -405,7 +405,7 @@ const Edit = () => {
     useEffect(() => {
         const Token = localStorage.getItem('token');
         axios
-            .get('http://files.covaiciviltechlab.com/get_material_test/', {
+            .get('https://files.covaiciviltechlab.com/get_material_test/', {
                 headers: {
                     Authorization: `Token ${Token}`,
                 },
@@ -573,7 +573,7 @@ const Edit = () => {
         };
 
         axios
-            .put(`http://files.covaiciviltechlab.com/edit_invoice/${id}/`, body, {
+            .put(`https://files.covaiciviltechlab.com/edit_invoice/${id}/`, body, {
                 headers: {
                     Authorization: `Token ${Token}`,
                     'Content-Type': 'application/json',
@@ -622,7 +622,7 @@ const Edit = () => {
         };
 
         axios
-            .put(`http://files.covaiciviltechlab.com/edit_invoice/${id}/`, body, {
+            .put(`https://files.covaiciviltechlab.com/edit_invoice/${id}/`, body, {
                 headers: {
                     Authorization: `Token ${Token}`,
                     'Content-Type': 'application/json',
@@ -711,7 +711,7 @@ const Edit = () => {
         };
         invoiceFormSubmit1();
         axios
-            .post('http://files.covaiciviltechlab.com/create_invoice_test/', body?.tests, {
+            .post('https://files.covaiciviltechlab.com/create_invoice_test/', body?.tests, {
                 headers: {
                     Authorization: `Token ${localStorage.getItem('token')}`,
                 },
@@ -742,7 +742,7 @@ const Edit = () => {
             onOk: () => {
                 invoiceFormSubmit1();
                 axios
-                    .delete(`http://files.covaiciviltechlab.com/delete_invoice_test/${id}`, {
+                    .delete(`https://files.covaiciviltechlab.com/delete_invoice_test/${id}`, {
                         headers: {
                             Authorization: `Token ${Token}`,
                         },
@@ -764,7 +764,7 @@ const Edit = () => {
         const Token = localStorage.getItem('token');
         invoiceFormSubmit1();
         axios
-            .put(`http://files.covaiciviltechlab.com/edit_invoice_test/${editRecord.id}/`, values, {
+            .put(`https://files.covaiciviltechlab.com/edit_invoice_test/${editRecord.id}/`, values, {
                 headers: {
                     Authorization: `Token ${Token}`,
                 },
@@ -883,7 +883,7 @@ const Edit = () => {
             invoiceFormSubmit(e);
             setFormSubmitted(true);
             axios
-                .post(`http://files.covaiciviltechlab.com/add_payment/${id}/`, paymentFormData, {
+                .post(`https://files.covaiciviltechlab.com/add_payment/${id}/`, paymentFormData, {
                     headers: {
                         Authorization: `Token ${localStorage.getItem('token')}`,
                     },
@@ -936,7 +936,7 @@ const Edit = () => {
         invoiceFormSubmit(e);
 
         axios
-            .put(`http://files.covaiciviltechlab.com/edit_payment/${paymentEditRecord?.id}/`, paymentFormData, {
+            .put(`https://files.covaiciviltechlab.com/edit_payment/${paymentEditRecord?.id}/`, paymentFormData, {
                 headers: {
                     Authorization: `Token ${Token}`,
                 },
@@ -975,7 +975,7 @@ const Edit = () => {
             okType: 'danger',
             onOk: () => {
                 axios
-                    .delete(`http://files.covaiciviltechlab.com/delete_payment/${id}`, {
+                    .delete(`https://files.covaiciviltechlab.com/delete_payment/${id}`, {
                         headers: {
                             Authorization: `Token ${Token}`,
                         },

@@ -21,7 +21,7 @@ const ExpenseReport = () => {
         const Token = localStorage.getItem('token');
 
         axios
-            .get('http://files.covaiciviltechlab.com/expense_report/', {
+            .get('https://files.covaiciviltechlab.com/expense_report/', {
                 headers: {
                     Authorization: `Token ${Token}`,
                 },
@@ -106,7 +106,7 @@ const ExpenseReport = () => {
         };
 
         axios
-            .post('http://files.covaiciviltechlab.com/expense_report/', body, {
+            .post('https://files.covaiciviltechlab.com/expense_report/', body, {
                 headers: {
                     Authorization: `Token ${Token}`,
                 },
@@ -133,7 +133,7 @@ const ExpenseReport = () => {
         };
 
         axios
-            .post('http://files.covaiciviltechlab.com/expense_report/', body, {
+            .post('https://files.covaiciviltechlab.com/expense_report/', body, {
                 headers: {
                     Authorization: `Token ${Token}`,
                 },

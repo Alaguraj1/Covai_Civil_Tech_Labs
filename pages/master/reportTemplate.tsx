@@ -25,7 +25,7 @@ const Report = () => {
         const Token = localStorage.getItem('token');
 
         axios
-            .get('http://files.covaiciviltechlab.com/create_report_template/', {
+            .get('https://files.covaiciviltechlab.com/create_report_template/', {
                 headers: {
                     Authorization: `Token ${Token}`,
                 },
@@ -45,7 +45,7 @@ const Report = () => {
         const Token = localStorage.getItem('token');
 
         axios
-            .get('http://files.covaiciviltechlab.com/report_template_list/', {
+            .get('https://files.covaiciviltechlab.com/report_template_list/', {
                 headers: {
                     Authorization: `Token ${Token}`,
                 },
@@ -141,7 +141,7 @@ const Report = () => {
             okType: 'danger',
             onOk: () => {
                 axios
-                    .delete(`http://files.covaiciviltechlab.com/delete_report_template/${record?.id}/`, {
+                    .delete(`https://files.covaiciviltechlab.com/delete_report_template/${record?.id}/`, {
                         headers: {
                             Authorization: `Token ${localStorage.getItem('token')}`,
                         },
@@ -176,7 +176,7 @@ const Report = () => {
 
         if (editRecord) {
             axios
-                .put(`http://files.covaiciviltechlab.com/edit_report_template/${editRecord.id}/`, body, {
+                .put(`https://files.covaiciviltechlab.com/edit_report_template/${editRecord.id}/`, body, {
                     headers: {
                         Authorization: `Token ${Token}`,
                     },
@@ -188,7 +188,7 @@ const Report = () => {
                 .catch((error) => {});
         } else {
             axios
-                .post('http://files.covaiciviltechlab.com/create_report_template/', body, {
+                .post('https://files.covaiciviltechlab.com/create_report_template/', body, {
                     headers: {
                         Authorization: `Token ${Token}`,
                     },

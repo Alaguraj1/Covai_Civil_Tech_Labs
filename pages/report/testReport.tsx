@@ -13,7 +13,7 @@ const TestReport = () => {
 
     useEffect(() => {
         axios
-            .get('http://files.covaiciviltechlab.com/test-list/', {
+            .get('https://files.covaiciviltechlab.com/test-list/', {
                 headers: {
                     Authorization: `Token ${localStorage.getItem('token')}`,
                 },
@@ -86,7 +86,7 @@ const TestReport = () => {
         };
 
         axios
-            .post('http://files.covaiciviltechlab.com/test-list/', body, {
+            .post('https://files.covaiciviltechlab.com/test-list/', body, {
                 headers: {
                     Authorization: `Token ${Token}`,
                 },
@@ -116,7 +116,7 @@ const TestReport = () => {
         console.log('✌️body --->', body);
 
         axios
-            .post('http://files.covaiciviltechlab.com/test-list/', body, {
+            .post('https://files.covaiciviltechlab.com/test-list/', body, {
                 headers: {
                     Authorization: `Token ${Token}`,
                 },

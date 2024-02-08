@@ -5,8 +5,9 @@ import Link from 'next/link';
 import IconLockDots from '@/components/Icon/IconLockDots';
 import axios from 'axios';
 import { message } from 'antd';
+import IconUser from '@/components/Icon/IconUser';
 
-const ChangePassword = () => {
+const ForgetPassword = () => {
     const router = useRouter();
 
     const [showPassword, setShowPassword] = useState(false);
@@ -104,8 +105,8 @@ const ChangePassword = () => {
                         <div className="flex w-full max-w-[440px] items-center gap-2 lg:absolute lg:end-6 lg:top-6 lg:max-w-full"></div>
                         <div className="w-full max-w-[440px] lg:mt-16">
                             <div className="mb-10">
-                                <h1 className="text-brown text-3xl font-extrabold uppercase !leading-snug md:text-4xl">Change Password</h1>
-                                <p className="text-base font-bold leading-normal text-white-dark">Enter your Old Password and New password to Change Password</p>
+                                <h1 className="text-brown text-3xl font-extrabold uppercase !leading-snug md:text-4xl">Forgot Password</h1>
+                                <p className="text-base font-bold leading-normal text-white-dark">Enter your User Name to Forgot Password</p>
                             </div>
                             {contextHolder}
                             <form className="space-y-5 dark:text-white" onSubmit={submitForm}>
@@ -114,20 +115,20 @@ const ChangePassword = () => {
                                     <div className="relative text-white-dark">
                                         <input
                                             required
-                                            id="old_password"
-                                            type={showPassword ? 'text' : 'password'}
-                                            placeholder="Enter Old Password"
+                                            id="username"
+                                            type="text"
+                                            placeholder="Enter User Name"
                                             className="form-input ps-10 placeholder:text-white-dark"
-                                            name="old_password"
+                                            name="username"
                                             value={formData?.old_password}
                                             onChange={inputChange}
                                         />
-                                        <span className="absolute start-4 top-1/2 -translate-y-1/2" onClick={togglePasswordVisibility}>
-                                            <IconLockDots fill={true} />
+                                        <span className="absolute start-4 top-1/2 -translate-y-1/2">
+                                            <IconUser fill={true} />
                                         </span>
                                     </div>
                                 </div>
-                                <div>
+                                {/* <div>
                                     <label htmlFor="Password">New Password</label>
                                     <div className="relative text-white-dark">
                                         <input
@@ -164,10 +165,10 @@ const ChangePassword = () => {
                                         </span>
                                     </div>
                                     {passwordMatchError && <div style={{ color: 'red', marginTop: '5px' }}>Passwords do not match. Please try again.</div>}
-                                </div>
+                                </div> */}
                                 <div style={{ display: 'flex' }}>
                                     <button type="submit" className="btn btn-gradient !mt-6 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]">
-                                        Change Password
+                                        Forget Password
                                     </button>
                                     <button
                                         style={{ paddingRight: '10px' }}
@@ -175,7 +176,7 @@ const ChangePassword = () => {
                                         onClick={() => router.back()}
                                         className="btn btn-gradient !mt-6 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]"
                                     >
-                                        cancel
+                                        Back
                                     </button>
                                 </div>
                             </form>
@@ -187,7 +188,7 @@ const ChangePassword = () => {
         </div>
     );
 };
-ChangePassword.getLayout = (page: any) => {
+ForgetPassword.getLayout = (page: any) => {
     return <BlankLayout>{page}</BlankLayout>;
 };
-export default ChangePassword;
+export default ForgetPassword;

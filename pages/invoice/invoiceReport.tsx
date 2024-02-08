@@ -43,7 +43,7 @@ const InvoiceReport = () => {
         const Token = localStorage.getItem('token');
 
         axios
-            .get(`http://files.covaiciviltechlab.com/edit_invoice_test_template/${id}/`, {
+            .get(`https://files.covaiciviltechlab.com/edit_invoice_test_template/${id}/`, {
                 headers: {
                     Authorization: `Token ${Token}`,
                 },
@@ -104,7 +104,7 @@ const InvoiceReport = () => {
             const Token = localStorage.getItem('token');
 
             axios
-                .put(`http://files.covaiciviltechlab.com/edit_invoice_test_template/${id}/`, body, {
+                .put(`https://files.covaiciviltechlab.com/edit_invoice_test_template/${id}/`, body, {
                     headers: {
                         Authorization: `Token ${Token}`,
                     },

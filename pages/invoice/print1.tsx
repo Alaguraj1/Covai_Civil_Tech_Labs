@@ -14,7 +14,7 @@ const Print1 = () => {
             const Token = localStorage.getItem('token');
 
             axios
-                .get(`http://files.covaiciviltechlab.com/preview_invoice_test_template/${id}/`, {
+                .get(`https://files.covaiciviltechlab.com/preview_invoice_test_template/${id}/`, {
                     headers: {
                         Authorization: `Token ${Token}`,
                     },

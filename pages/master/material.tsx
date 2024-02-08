@@ -50,7 +50,7 @@ const Material = () => {
         const Token = localStorage.getItem('token');
 
         axios
-            .get('http://files.covaiciviltechlab.com/material_list/', {
+            .get('https://files.covaiciviltechlab.com/material_list/', {
                 headers: {
                     Authorization: `Token ${Token}`,
                 },
@@ -70,7 +70,7 @@ const Material = () => {
         const Token = localStorage.getItem('token');
 
         axios
-            .get('http://files.covaiciviltechlab.com/create_report_template/', {
+            .get('https://files.covaiciviltechlab.com/create_report_template/', {
                 headers: {
                     Authorization: `Token ${Token}`,
                 },
@@ -193,7 +193,7 @@ const Material = () => {
     //     okType: "danger",
     //     onOk: () => {
     //       console.log("values", record)
-    //       axios.delete(`http://files.covaiciviltechlab.com/delete_material/${record.id}`, {
+    //       axios.delete(`https://files.covaiciviltechlab.com/delete_material/${record.id}`, {
     //         headers: {
     //           "Authorization": `Token ${Token}`
     //         }
@@ -231,7 +231,7 @@ const Material = () => {
 
         if (editRecord) {
             axios
-                .put(`http://files.covaiciviltechlab.com/edit_material/${editRecord.id}/`, body, {
+                .put(`https://files.covaiciviltechlab.com/edit_material/${editRecord.id}/`, body, {
                     headers: {
                         Authorization: `Token ${Token}`,
                     },
@@ -246,7 +246,7 @@ const Material = () => {
                 });
         } else {
             axios
-                .post('http://files.covaiciviltechlab.com/create_material/', body, {
+                .post('https://files.covaiciviltechlab.com/create_material/', body, {
                     headers: {
                         Authorization: `Token ${Token}`,
                     },
