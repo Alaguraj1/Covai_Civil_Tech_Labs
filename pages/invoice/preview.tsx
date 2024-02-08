@@ -251,7 +251,7 @@ console.log("printData", printData?.invoice)
                         <hr className="my-2 border-white-light dark:border-[#1b2e4b]" />
                         <div className="preview-footer-main">
                             <div className="preview-qr-outer">
-                                <img src="/assets/images/Sponsor.jpg" style={{ textAlign: 'center', width: '75%', height: '50%' }} alt="image" />
+                                <img src="/assets/images/Sponsor.jpg" style={{ textAlign: 'center', width: '75%', height: '75%' }} alt="image" />
                             </div>
 
                             {printData?.invoice?.invoice_no === null ? (
