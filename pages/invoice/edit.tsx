@@ -53,6 +53,7 @@ const Edit = () => {
     });
     const [pendingBalance, setPendingBalance] = useState(0);
     const [formSubmitted, setFormSubmitted] = useState(false);
+    const [formUpdated, setFormUpdated] = useState(false);
 
     const [formData, setFormData] = useState<any>({
         customer: '',
@@ -846,6 +847,7 @@ const Edit = () => {
 
     const paymentClose = () => {
         setOpen2(false);
+        setFormUpdated(false);
         setPaymentFormData({
             payment_mode: '',
             date: '',
@@ -922,10 +924,74 @@ const Edit = () => {
     };
 
     // payment edit
+    // const paymentUpdate = (e: any) => {
+    //     e.preventDefault();
+    //     const Token = localStorage.getItem('token');
+
+    //     if (pendingBalance < paymentFormData.amount) {
+    //         messageApi.open({
+    //             type: 'error',
+    //             content: 'The amount filed exceeds the available balance.',
+    //         });
+    //         return;
+    //     } else if (paymentFormData.payment_mode === 'upi' && paymentFormData?.upi == null) {
+    //         if (paymentFormData.payment_mode == 'upi' && paymentFormData?.upi == null) {
+    //             messageApi.open({
+    //                 type: 'error',
+    //                 content: 'UPI field is required',
+    //             });
+    //             return;
+    //         } else if (paymentFormData.payment_mode === 'cheque' && paymentFormData?.cheque_number == null) {
+    //             messageApi.open({
+    //                 type: 'error',
+    //                 content: 'Cheque Number field is required',
+    //             });
+    //             return;
+    //         } else if (paymentFormData?.amount == null) {
+    //             messageApi.open({
+    //                 type: 'error',
+    //                 content: 'Amount field is required',
+    //             });
+    //             return;
+    //         } else {
+    //             invoiceFormSubmit(e);
+    //             setFormUpdated(true);
+
+    //             axios
+    //                 .put(`https://files.covaiciviltechlab.com/edit_payment/${paymentEditRecord?.id}/`, paymentFormData, {
+    //                     headers: {
+    //                         Authorization: `Token ${Token}`,
+    //                     },
+    //                 })
+    //                 .then((res: any) => {
+    //                     setOpen2(false);
+    //                     const totalAmount = res.data.payments.reduce((accumulator: any, current: any) => {
+    //                         const amountValue = parseFloat(current.amount);
+
+    //                         return accumulator + amountValue;
+    //                     }, 0);
+
+    //                     setAdvance(totalAmount);
+
+    //                     const InitialBalance: any = afterTax - totalAmount;
+    //                     setBalance(parseInt(InitialBalance, 10));
+    //                     getInvoiceTestData2();
+    //                 })
+    //                 .catch((error: any) => {
+    //                     if (error?.response?.status === 401) {
+    //                         router.push('/');
+    //                     } else {
+    //                     }
+    //                 });
+    //         }
+    //     }
+    // };
+
     const paymentUpdate = (e: any) => {
         e.preventDefault();
         const Token = localStorage.getItem('token');
-
+    
+        // Check if the payment amount exceeds the available balance
         if (pendingBalance < paymentFormData.amount) {
             messageApi.open({
                 type: 'error',
@@ -933,8 +999,34 @@ const Edit = () => {
             });
             return;
         }
+    
+        // Check for specific payment modes and required fields
+        if (
+            (paymentFormData.payment_mode === 'upi' && paymentFormData?.upi == null) ||
+            (paymentFormData.payment_mode === 'cheque' && paymentFormData?.cheque_number == null) ||
+            paymentFormData?.amount == null
+        ) {
+            let errorMessage = '';
+    
+            if (paymentFormData.payment_mode === 'upi' && paymentFormData?.upi == null) {
+                errorMessage = 'UPI field is required';
+            } else if (paymentFormData.payment_mode === 'cheque' && paymentFormData?.cheque_number == null) {
+                errorMessage = 'Cheque Number field is required';
+            } else if (paymentFormData?.amount == null) {
+                errorMessage = 'Amount field is required';
+            }
+    
+            messageApi.open({
+                type: 'error',
+                content: errorMessage,
+            });
+            return;
+        }
+    
+        // If all checks pass, proceed with the payment update
         invoiceFormSubmit(e);
-
+        setFormUpdated(true);
+    
         axios
             .put(`https://files.covaiciviltechlab.com/edit_payment/${paymentEditRecord?.id}/`, paymentFormData, {
                 headers: {
@@ -942,27 +1034,30 @@ const Edit = () => {
                 },
             })
             .then((res: any) => {
+                setOpen2(false);
+    
+                // Calculate total amount and update state
                 const totalAmount = res.data.payments.reduce((accumulator: any, current: any) => {
                     const amountValue = parseFloat(current.amount);
-
                     return accumulator + amountValue;
                 }, 0);
-
+    
                 setAdvance(totalAmount);
-
+    
+                // Update balance and fetch updated invoice data
                 const InitialBalance: any = afterTax - totalAmount;
                 setBalance(parseInt(InitialBalance, 10));
                 getInvoiceTestData2();
-                setOpen2(false);
             })
             .catch((error: any) => {
                 if (error?.response?.status === 401) {
                     router.push('/');
                 } else {
+                    // Handle other errors if needed
                 }
             });
-        onClose();
     };
+    
 
     // payment Delete
     const PaymentDelete = (id: any) => {
@@ -1776,7 +1871,7 @@ const Edit = () => {
                                             onChange={paymentInputChange}
                                             required
                                         />
-                                        {paymentFormData?.cheque_number === null && <p style={{ color: 'red' }}>Cheque Number field is required</p>}
+                                        {formSubmitted && paymentFormData?.cheque_number === null && <p style={{ color: 'red' }}>Cheque Number field is required</p>}
                                     </>
                                 )}
                                 {paymentFormData?.payment_mode === 'upi' && (
@@ -1785,7 +1880,7 @@ const Edit = () => {
                                             UPI Ref
                                         </label>
                                         <input id="upi" type="text" className="form-input flex-1" name="upi" value={paymentFormData?.upi} onChange={paymentInputChange} required />
-                                        {paymentFormData?.upi === null && <p style={{ color: 'red' }}>UPI field is required</p>}
+                                        {formSubmitted && paymentFormData?.upi === null && <p style={{ color: 'red' }}>UPI field is required</p>}
                                     </>
                                 )}
                             </div>
@@ -1817,11 +1912,9 @@ const Edit = () => {
                             <div style={{ marginBottom: '10px' }}>
                                 <label>Amount Paid Date</label>
                                 <input type="date" className="form-input flex-1" name="date" value={paymentFormData?.date} onChange={paymentInputChange} />
+                                {formUpdated && paymentFormData?.date === '' && <p style={{ color: 'red' }}>Amount Paid Date is required</p>}
                             </div>
-                            <div style={{ marginBottom: '10px' }}>
-                                <label>Amount</label>
-                                <input className="form-input flex-1" name="amount" value={paymentFormData?.amount} onChange={paymentInputChange} />
-                            </div>
+
                             <div style={{ marginBottom: '10px' }}>
                                 <label htmlFor="payment-mode" className="mb-0 w-1/3 ltr:mr-2 rtl:ml-2">
                                     Payment Mode
@@ -1844,6 +1937,7 @@ const Edit = () => {
                                             Cheque Number
                                         </label>
                                         <input id="swift-code" type="text" className="form-input flex-1" name="cheque_number" value={paymentFormData?.cheque_number} onChange={paymentInputChange} />
+                                        {formUpdated && paymentFormData?.cheque_number === null && <p style={{ color: 'red' }}>Cheque Number field is required</p>}
                                     </>
                                 )}
                                 {paymentMode === 'upi' && (
@@ -1852,8 +1946,14 @@ const Edit = () => {
                                             UPI Number
                                         </label>
                                         <input id="swift-code" type="text" className="form-input flex-1" name="upi" value={paymentFormData?.upi} onChange={paymentInputChange} />
+                                        {formUpdated && paymentFormData?.upi === null && <p style={{ color: 'red' }}>UPI field is required</p>}
                                     </>
                                 )}
+                            </div>
+                            <div style={{ marginBottom: '10px' }}>
+                                <label>Amount</label>
+                                <input className="form-input flex-1" name="amount" value={paymentFormData?.amount} onChange={paymentInputChange} />
+                                {formUpdated && paymentFormData?.amount === '' && <p style={{ color: 'red' }}>Amount is required</p>}
                             </div>
                             <div style={{ paddingTop: '30px' }}>
                                 <Button type="primary" htmlType="submit" onClick={paymentUpdate}>
