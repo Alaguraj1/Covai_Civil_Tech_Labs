@@ -71,10 +71,10 @@ const Preview = () => {
 
     // tax total amount
 
-        const percentagesArray = filteredTaxes?.map((item: any) => parseFloat(item?.tax_percentage));
+    const percentagesArray = filteredTaxes?.map((item: any) => parseFloat(item?.tax_percentage));
 
-        var sum = percentagesArray?.reduce((accumulator: any, currentValue: any) => accumulator + currentValue, 0);
-    
+    var sum = percentagesArray?.reduce((accumulator: any, currentValue: any) => accumulator + currentValue, 0);
+
     const Tax_total = (BeforeTotal * sum) / 100;
 
     // after tax
@@ -117,7 +117,7 @@ const Preview = () => {
 
                         <hr className="my-2 border-white-light dark:border-[#1b2e4b]" />
                         <div className="preview-header " style={{ fontSize: '12px' }}>
-                            <div className="flex-1">
+                            <div className="mb-3 flex-1 sm:w-full md:w-1/2 lg:w-1/2">
                                 <div className="space-y-1 text-white-dark">
                                     <div>Issue For:</div>
                                     <div className="font-semibold text-black dark:text-white">
@@ -132,8 +132,8 @@ const Preview = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex flex-col justify-between gap-6 sm:flex-row lg:w-2/3">
-                                <div className="xl:1/3 sm:w-1/2 lg:w-2/5">
+                            <div className="mt-3 flex flex-col justify-end gap-6 sm:flex-row md:w-1/2  lg:w-1/2">
+                                <div className="xl:1/3 sm:w-full md:w-1/2 lg:w-1/2">
                                     <div className="mb-1 flex w-full items-center justify-between">
                                         <div className="text-white-dark">Issue Date :</div>
                                         <div>{printData?.invoice?.date}</div>
@@ -153,7 +153,7 @@ const Preview = () => {
                                     </div>
                                 </div>
 
-                                <div className="xl:1/3 sm:w-1/2 lg:w-2/5">
+                                {/* <div className="xl:1/3 sm:w-1/2 lg:w-2/5">
                                     <div className="mb-1 flex w-full items-center justify-between">
                                         <div className="text-white-dark">Name:</div>
                                         <div className="whitespace-nowrap">Covai Civil Tech Lab</div>
@@ -170,7 +170,7 @@ const Preview = () => {
                                         <div className="text-white-dark">IFSC Code:</div>
                                         <div>ICIC0001550</div>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
 
@@ -203,50 +203,58 @@ const Preview = () => {
                                             </>
                                         );
                                     })}
+                                </tbody>
+                            </table>
+                            <table>
+                                <tr style={{ border: 'none' }}>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr style={{ border: 'none' }}>
+                                    <>
+                                        <td>
+                                            {' '}
+                                            <b>Name:</b> Covai Civil Tech Lab{' '}
+                                        </td>
 
-                                    {printData?.invoice?.discount >= 1 ? (
-                                        <tr style={{ border: 'none' }}>
+                                        {printData?.invoice?.discount >= 1 ? (
                                             <>
-                                                <td> </td>
-                                                <td> </td>
-                                                <td> </td>
-                                                <td> </td>
                                                 <td style={{ textAlign: 'right' }}>Discount</td>
                                                 <td style={{ textAlign: 'right' }}>{printData?.invoice?.discount}</td>
                                             </>
-                                        </tr>
-                                    ) : null}
+                                        ) : null}
+                                    </>
+                                </tr>
 
-                                    <tr style={{ border: 'none' }}>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td style={{ textAlign: 'right' }}>Before Tax</td>
-                                        <td style={{ textAlign: 'right' }}>{BeforeTotal.toFixed(2)}</td>
-                                    </tr>
+                                <tr style={{ border: 'none' }}>
+                                    <td>
+                                        <b>Account Number:</b> 584705000004{' '}
+                                    </td>
 
-                                    <tr style={{ border: 'none' }}>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td style={{ textAlign: 'right' }}>{Discount()}</td>
-                                        <td style={{ textAlign: 'right' }}>{Tax_total.toFixed(2)}</td>
-                                    </tr>
+                                    <td style={{ textAlign: 'right' }}>Before Tax</td>
+                                    <td style={{ textAlign: 'right' }}>{BeforeTotal.toFixed(2)}</td>
+                                </tr>
 
-                                    <tr style={{ border: 'none' }}></tr>
-                                    <tr style={{ border: 'none' }}>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td></td>
-                                        <td style={{ textAlign: 'right' }}>Total</td>
-                                        <td style={{ textAlign: 'right', fontWeight: 'bold' }}>
-                                            {parseInt(After_Tax, 10)} <input type="hidden" id="amt" name="amt" defaultValue="11,446.00" />
-                                        </td>
-                                    </tr>
-                                </tbody>
+                                <tr style={{ border: 'none' }}>
+                                    <td>
+                                        <b>Branch:</b> Saibaba colony branch, coimbatore.
+                                    </td>
+                                    <td style={{ textAlign: 'right' }}>{Discount()}</td>
+                                    <td style={{ textAlign: 'right' }}>{Tax_total.toFixed(2)}</td>
+                                </tr>
+
+                                <tr style={{ border: 'none' }}></tr>
+                                <tr style={{ border: 'none' }}>
+                                    <td>
+                                        <b>IFSC Code:</b> ICIC0001550
+                                    </td>
+
+                                    <td style={{ textAlign: 'right' }}>Total</td>
+                                    <td style={{ textAlign: 'right', fontWeight: 'bold' }}>
+                                        {parseInt(After_Tax, 10)} <input type="hidden" id="amt" name="amt" defaultValue="11,446.00" />
+                                    </td>
+                                </tr>
                             </table>
                         </div>
 
