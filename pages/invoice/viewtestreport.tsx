@@ -97,8 +97,8 @@ const [finalHtml, setFinalHtml] = useState<any>()
 
 return (
     <>
-        <div style={{ padding: "50px 100px" }}>
-            <div dangerouslySetInnerHTML={{ __html: finalHtml }}></div>
+        <div style={{ padding: "10px 10px" }}>
+            <div className='hide-media' dangerouslySetInnerHTML={{ __html: finalHtml }}></div>
         </div>
     </>
 )
