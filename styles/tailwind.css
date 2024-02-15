@@ -870,9 +870,16 @@ table tbody tr {
     } */
 }
 
+.print_outer{
+    display: flex;
+    justify-content: center;
+}
 
-
-
+@media(max-width:600px) {
+    .print_outer{
+        display: block;
+    }
+}
 
 
 

@@ -97,7 +97,7 @@ const [finalHtml, setFinalHtml] = useState<any>()
 
 return (
     <>
-        <div >
+        <div  className='print_outer' style={{ padding: '10px 10px'}}>
             <div className='table table-responsive' dangerouslySetInnerHTML={{ __html: finalHtml }}></div>
         </div>
     </>
