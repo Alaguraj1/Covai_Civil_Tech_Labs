@@ -109,7 +109,7 @@ const Print = () => {
     return (
         <>
             <div style={{ padding: '10px 10px' }}>
-                <div dangerouslySetInnerHTML={{ __html: finalHtml }}></div>
+                <div className='table table-responsive' dangerouslySetInnerHTML={{ __html: finalHtml }}></div>
             </div>
         </>
     );
