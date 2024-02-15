@@ -23,7 +23,7 @@ const [finalHtml, setFinalHtml] = useState<any>()
         }
     };
 
-  
+  console.log(invoiceReport, "report")
 
     useEffect(() => {
         getTestReport();
@@ -97,8 +97,8 @@ const [finalHtml, setFinalHtml] = useState<any>()
 
 return (
     <>
-        <div style={{ padding: "10px 10px" }}>
-            <div className='hide-media' dangerouslySetInnerHTML={{ __html: finalHtml }}></div>
+        <div >
+            <div className='table table-responsive' dangerouslySetInnerHTML={{ __html: finalHtml }}></div>
         </div>
     </>
 )
