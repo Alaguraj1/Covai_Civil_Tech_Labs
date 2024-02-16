@@ -803,6 +803,7 @@ border-right: 1px solid black;
 .preview-header{
     display:flex;
     justify-content: space-between;
+    font-size: 12px;
 }
 
 .preview-footer-main{
@@ -810,10 +811,33 @@ border-right: 1px solid black;
     justify-content: space-between;
 }
 
-.preview-qr-outer{
+.preview-qr-outer1{
     display: flex;
     justify-content: start;
 }
+
+.preview-qr-outer1_img{
+    text-align: center;
+    width: 75%;
+    height: 75%;
+}
+
+.preview-qr-outer2{
+    display: flex;
+    justify-content: start;
+}
+.preview-qr-outer2_img{
+    text-align: center;
+    width: 120px;
+    height: 120px;
+}
+
+.preview-qr-outer3{
+    display: flex;
+    justify-content: start;
+}
+
+
 
 table tbody tr {
     border-bottom-width: 0px;
@@ -840,6 +864,23 @@ table tbody tr {
     border-color:black !important;
 }
 
+.print_outer{
+    display: flex;
+    justify-content: center;
+}
+
+.invoice-right{
+    font-size: 14px;
+}
+
+.issue_date{
+    width: 100%;
+}
+
+.footer-decleration{
+font-size: 14px;
+}
+
 @media(max-width:992px) {
     .system-navbar{
         display: none !important;
@@ -853,33 +894,96 @@ table tbody tr {
 
 }
 
+@media(max-width:600px) {
+    .print_outer{
+        display: block;
+    }
+
+    .invoice-head{
+        font-size: 20px;
+    }
+
+    .invoice-number{
+        font-size: 10px;
+    }
+
+    .invoice-right{
+        font-size: 10px;
+    }
+
+    .issue_date{
+        width: 50%;
+    }
+
+    .preview-header{
+        font-size: 10px;
+        /* justify-content: space-between; */
+    }
+
+
+    .preview-footer-main{
+        font-size: 10px;
+    }
+
+    .preview-qr-outer1{
+        display: block
+
+    }
+
+    .preview-qr-outer1_img{
+        width: 100%;
+        height: 50%;
+    }
+    
+    .preview-qr-outer2{
+        display: block
+    }
+    .preview-qr-outer2_img{
+        width: 40%;
+        height: 50%;
+    }
+    
+    .preview-qr-outer3{
+        display: block
+
+    }
+
+    .sign-footer{
+        font-size: 10px;
+        line-height: 12px;
+    }
+
+    .footer-decleration{
+        font-size: 10px;
+        }
+    
+
+        .invoice-table table tr{
+            border-bottom-width: 1px;
+          border-color: black !important;
+        }
+        .invoice-table table tr:nth-child(2n+1) {
+            background-color: rgb(224 230 237 / 0.2) !important;
+          }
+        .invoice-table table tr th{text-align: left; padding: 3px 0.75rem; font-size: 10px;}
+        .invoice-table table tr td{ padding: 1px 3px;font-size: 10px;}
+}
+
 @media(max-width:500px) {
     .sale_report_inputs{
         display: block;
     }
-    .preview-footer-main{
-        display:block;
-    }
-    .preview-header{
-        display:block;
-        /* justify-content: space-between; */
-    }
+   
+   
 /* 
     .preview-qr-outer{
         display: block;
     } */
 }
 
-.print_outer{
-    display: flex;
-    justify-content: center;
-}
 
-@media(max-width:600px) {
-    .print_outer{
-        display: block;
-    }
-}
+
+
 
 
 
